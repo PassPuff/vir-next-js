@@ -8,4 +8,7 @@ export default interface Main {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  image: {
+    url: string;
+  };
 }

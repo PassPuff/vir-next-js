@@ -1,16 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // i18n: {
-  //   locales: ['en', 'it', 'fr'],  // Доступные языки
-  //   defaultLocale: 'en',          // Дефолтный язык
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/uploads/**/*",
+      },
+    ],
+  },
 };
-
-
-
-
-
-
 export default nextConfig;

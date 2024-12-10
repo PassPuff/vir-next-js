@@ -10,19 +10,11 @@ interface imageArr {
   formats?: imageFormats;
 }
 
-interface Category {
-  data: {
-    attributes: {
-      slug: string;
-      name: string;
-    };
-  };
-}
-
 export default interface Product {
   id: number;
   documentId: string;
   name: string;
+  slug: string;
   description: string;
   orderPrice: number;
   stockPrice: number;
@@ -32,5 +24,8 @@ export default interface Product {
   updatedAt: string;
   publishedAt: string;
   imageMain: imageArr;
-  category: Category;
+  category: {
+    slug: string;
+    name: string;
+  };
 }
