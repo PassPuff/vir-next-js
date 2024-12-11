@@ -27,5 +27,6 @@ export default interface Product {
   category: {
     slug: string;
     name: string;
+    description: string;
   };
 }

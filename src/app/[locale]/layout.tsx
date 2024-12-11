@@ -17,17 +17,17 @@ export const revalidate = 60;
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
   const locales = await getLocalsStrapi();
-
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function RootLayout({ params, children }: Props) {
+export default async function MainLayout({ params, children }: Props) {
   const { locale } = await params;
 
   const locales = await getLocalsStrapi();
 
   // Проверка локали
-  if (!locales.includes(locale)) notFound(); // Возвращаем ошибку 404, если локаль не существует
+  // Возвращаем ошибку 404, если локаль не существует
+  if (!locales.includes(locale)) notFound();
 
   return (
     <html lang={locale}>

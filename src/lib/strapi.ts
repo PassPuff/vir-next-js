@@ -5,6 +5,7 @@ import type Main from "@/interfaces/main";
 
 interface Props {
   endpoint: string;
+  locale: string;
   query?: Record<string, string>;
   wrappedByKey?: string;
   wrappedByList?: boolean;
@@ -13,6 +14,7 @@ interface Props {
 export default async function fetchApi<T>({
   endpoint,
   query,
+  locale,
   wrappedByKey,
   wrappedByList,
 }: Props): Promise<T> {
@@ -29,6 +31,12 @@ export default async function fetchApi<T>({
       url.searchParams.append(key, value);
     });
   }
+
+  // Если передан параметр locale, добавляем его в запрос
+  if (locale) {
+    url.searchParams.append("locale", locale);
+  }
+
   const res = await fetch(url.toString());
 
   if (!res.ok) throw new Error("Failed to fetch data");
@@ -62,8 +70,8 @@ export async function getMainPage(locale: string) {
     endpoint: "main",
     query: {
       populate: "image",
-      locale,
     },
+    locale,
     wrappedByKey: "data",
   });
 }
@@ -73,19 +81,9 @@ export async function getCategories(locale: string) {
     endpoint: "categories",
     query: {
       populate: "image", // Include all relations
-      locale,
     },
-    wrappedByKey: "data",
-  });
-}
+    locale,
 
-export async function getProductsWithCategories(locale: string) {
-  return await fetchApi<Product[]>({
-    endpoint: "products",
-    query: {
-      populate: "category",
-      locale,
-    },
     wrappedByKey: "data",
   });
 }
@@ -95,8 +93,20 @@ export async function getProducts(locale: string) {
     endpoint: "products",
     query: {
       populate: "*", // Include all relations
-      locale: locale || "en",
     },
+    locale,
+
+    wrappedByKey: "data",
+  });
+}
+
+export async function getProductsWithCategories(locale: string) {
+  return await fetchApi<Product[]>({
+    endpoint: "products",
+    query: {
+      populate: "category",
+    },
+    locale,
     wrappedByKey: "data",
   });
 }
@@ -107,8 +117,9 @@ export async function getProductBySlug(slug: string, locale: string) {
     query: {
       filters: `slug=${slug}`,
       populate: "*", // Include all relations
-      locale,
     },
+    locale,
+
     wrappedByKey: "data",
   });
 }
@@ -119,8 +130,8 @@ export async function getCatalogBySlug(slug: string, locale: string) {
     query: {
       filters: `slug=${slug}`,
       populate: "*", // Include all relations
-      locale,
     },
+    locale,
     wrappedByKey: "data",
   });
 }

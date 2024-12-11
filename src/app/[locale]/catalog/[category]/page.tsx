@@ -1,9 +1,10 @@
-import Container from "@/components/shared/Container";
-import { getProducts } from "@/lib/strapi";
+// import qs from "qs";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocalsStrapi } from "@/lib/strapi";
+import { getProducts } from "@/lib/strapi";
+import Container from "@/components/shared/Container";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
@@ -12,13 +13,22 @@ type Props = {
 export const revalidate = 60;
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  const locales = await getLocalsStrapi();
+  // const ourQuery = qs.stringify({
+  //   filters: {
+  //     locale,
+  //   },
+  // });
 
+  const locales = await getLocalsStrapi();
   const categoriesRes = await fetch(
     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/categories`,
   );
 
+  if (!categoriesRes.ok) throw new Error("Failed to fetch categories");
+
   const categories = await categoriesRes.json();
+
+  // console.log(categories.data);
 
   // Для каждой локали генерируем категорию
   return locales.flatMap((locale) =>
@@ -40,15 +50,30 @@ export default async function CategoryPage({ params }: Props) {
   const filteredProducts = products.filter(
     (product) => product.category.slug === category,
   );
+
   return (
     <section>
       <Container>
-        <h1 className="text-4xl font-bold pb-3">{category}</h1>
-        <ul className="grid grid-cols-2 gap-5">
+        <header className="pb-10 max-w-lg">
+          <h1 className="text-4xl font-bold pb-3">
+            List products{" "}
+            <span className="text-yellow-500">
+              {filteredProducts[0].category.name}
+            </span>
+          </h1>
+          <p>{filteredProducts[0].category.description}</p>
+        </header>
+
+        <ul className="grid grid-cols-3 gap-10">
           {filteredProducts.map((product) => (
             <li key={product.id}>
-              <Link href={`/${locale}/catalog/${category}/${product.slug}`}>
-                <h2 className="text-2xl font-bold pb-3">{product.name}</h2>
+              <Link
+                className="block p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
+                hover:bg-gray-200
+                focus:bg-gray-200"
+                href={`/${locale}/catalog/${category}/${product.slug}`}
+              >
+                <h2 className="text-xl font-bold pb-3">{product.name}</h2>
                 <Image
                   src={
                     process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -58,13 +83,11 @@ export default async function CategoryPage({ params }: Props) {
                   width={500}
                   height={500}
                 ></Image>
-                {
-                  <div>
-                    <p>Order Price: {product.orderPrice}</p>
-                    <p>Stock Price: {product.stockPrice}</p>
-                    <p>New Price: {product.newPrice}</p>
-                  </div>
-                }
+                <div>
+                  <p>Order Price: {product.orderPrice}</p>
+                  <p>Stock Price: {product.stockPrice}</p>
+                  <p>New Price: {product.newPrice}</p>
+                </div>
               </Link>
             </li>
           ))}
