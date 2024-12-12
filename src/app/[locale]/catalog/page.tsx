@@ -1,4 +1,4 @@
-import { getCategories } from "@/lib/strapi";
+import { getCategories } from "@/lib/api/get-categories";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/Container";
@@ -32,9 +32,7 @@ export default async function CatalogPage({ params }: Props) {
               >
                 <h2 className="font-bold pb-3 text-2xl">{catalog.name}</h2>
                 <Image
-                  src={
-                    process.env.NEXT_PUBLIC_STRAPI_API_URL + catalog.image.url
-                  }
+                  src={process.env.STRAPI_API_URL + catalog.image.url}
                   alt={catalog.name}
                   width={500}
                   height={500}

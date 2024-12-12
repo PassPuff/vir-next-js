@@ -1,4 +1,5 @@
-import { getLocalsStrapi, getProducts } from "@/lib/strapi";
+import { getLocalsStrapi } from "@/lib/api/get-locales";
+import { getProducts } from "@/lib/api/get-products";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/shared/Container";
@@ -13,7 +14,7 @@ export async function generateStaticParams(): Promise<{ locale: string }[]> {
   const locales = await getLocalsStrapi();
 
   const productsRes = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/products?populate=category`,
+    `${process.env.STRAPI_API_URL}/api/products?populate=category`,
   );
   if (!productsRes.ok) throw new Error("Failed to fetch products");
   const products = await productsRes.json();
@@ -54,10 +55,7 @@ export default async function ProductPage({ params }: Props) {
         {productFound.imageMain && (
           <Image
             className="col-span-6 row-span-2"
-            src={
-              process.env.NEXT_PUBLIC_STRAPI_API_URL +
-              productFound.imageMain.url
-            }
+            src={process.env.STRAPI_API_URL + productFound.imageMain.url}
             alt={productFound.name}
             width={500}
             height={500}
