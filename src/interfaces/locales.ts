@@ -1,4 +1,4 @@
-export default interface Locales {
+export interface Locales {
   id: number;
   documentId: string;
   name: string;

@@ -1,38 +1,33 @@
-// import qs from "qs";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocalsStrapi } from "@/lib/api/get-locales";
-import { getProducts } from "@/lib/api/get-products";
 import Container from "@/components/shared/Container";
+import fetchApi from "@/lib/api/strapi";
+import type Catalog from "@/interfaces/catalog";
+import type Product from "@/interfaces/product";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
 };
 
+export const dynamicParams = false;
 export const revalidate = 60;
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  // const ourQuery = qs.stringify({
-  //   filters: {
-  //     locale,
-  //   },
-  // });
-
   const locales = await getLocalsStrapi();
-  const categoriesRes = await fetch(
-    `${process.env.STRAPI_API_URL}/api/categories`,
-  );
 
-  if (!categoriesRes.ok) throw new Error("Failed to fetch categories");
-
-  const categories = await categoriesRes.json();
-
-  // console.log(categories.data);
+  const categories = await fetchApi<Catalog[]>({
+    endpoint: "categories",
+    wrappedByKey: "data",
+    query: {
+      "fields[0]": "slug",
+    },
+  });
 
   // Для каждой локали генерируем категорию
   return locales.flatMap((locale) =>
-    categories.data.map((category: { slug: string }) => ({
+    categories.map((category: { slug: string }) => ({
       locale,
       category: category.slug,
     })),
@@ -42,14 +37,20 @@ export async function generateStaticParams(): Promise<{ locale: string }[]> {
 export default async function CategoryPage({ params }: Props) {
   const { category, locale } = await params;
 
-  // Получаем продукты для текущей локали
-  const products = await getProducts(locale);
+  //Получаем продукты для текущей локали
+  const products = await fetchApi<Product[]>({
+    endpoint: "products",
+    query: {
+      // "populate[imageMain][fields][0]": "url",
+      // "populate[category][fields][0]": "slug",
+      populate: "*",
+      "filters[category][slug][$eq]": category,
+    },
+    locale,
+    wrappedByKey: "data",
+  });
 
   if (!products) notFound();
-
-  const filteredProducts = products.filter(
-    (product) => product.category.slug === category,
-  );
 
   return (
     <section>
@@ -57,15 +58,13 @@ export default async function CategoryPage({ params }: Props) {
         <header className="pb-10 max-w-lg">
           <h1 className="text-4xl font-bold pb-3">
             List products{" "}
-            <span className="text-yellow-500">
-              {filteredProducts[0].category.name}
-            </span>
+            <span className="text-yellow-500">{products[0].category.name}</span>
           </h1>
-          <p>{filteredProducts[0].category.description}</p>
+          <p>{products[0].category.description}</p>
         </header>
 
         <ul className="grid grid-cols-3 gap-10">
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <li key={product.id}>
               <Link
                 className="block p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out

@@ -1,16 +1,37 @@
-import { getCategories } from "@/lib/api/get-categories";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/Container";
+import fetchApi from "@/lib/api/strapi";
+import type Catalog from "@/interfaces/catalog";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function CatalogPage({ params }: Props) {
+export const revalidate = 60;
+export const dynamicParams = false;
+
+async function getCatalog(params: Promise<{ locale: string }>) {
   const { locale } = await params;
 
-  const catalogs = await getCategories(locale);
+  const data = await fetchApi<Catalog[]>({
+    endpoint: "categories",
+    query: {
+      "populate[image][fields][0]": "url",
+      "fields[0]": "slug",
+      "fields[1]": "name",
+      "fields[2]": "description",
+      "fields[3]": "locale",
+    },
+    locale: locale,
+    wrappedByKey: "data",
+  });
+
+  return { data, locale };
+}
+
+export default async function CatalogPage({ params }: Props) {
+  const { data, locale } = await getCatalog(params);
 
   return (
     <section>
@@ -21,7 +42,7 @@ export default async function CatalogPage({ params }: Props) {
           <span className="text-yellow-500"> Locale: {locale}</span>
         </h1>
         <ul className="grid grid-cols-3 gap-10">
-          {catalogs.map((catalog) => (
+          {data.map((catalog) => (
             <li key={catalog.id}>
               <Link
                 className="block p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
@@ -31,12 +52,14 @@ export default async function CatalogPage({ params }: Props) {
                 key={catalog.slug}
               >
                 <h2 className="font-bold pb-3 text-2xl">{catalog.name}</h2>
-                <Image
-                  src={process.env.STRAPI_API_URL + catalog.image.url}
-                  alt={catalog.name}
-                  width={500}
-                  height={500}
-                ></Image>
+                {catalog.image && (
+                  <Image
+                    src={process.env.STRAPI_API_URL + catalog.image.url}
+                    alt={catalog.name}
+                    width={500}
+                    height={500}
+                  />
+                )}
               </Link>
             </li>
           ))}

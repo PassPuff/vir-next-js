@@ -14,9 +14,11 @@ type Props = {
 };
 
 export const revalidate = 60;
+export const dynamicParams = false;
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
   const locales = await getLocalsStrapi();
+
   return locales.map((locale) => ({ locale }));
 }
 

@@ -1,7 +1,6 @@
 import { getCategories } from "@/lib/api/get-categories";
 import Container from "@/components/shared/Container";
 import NavLink from "@/components/shared/MainPage/NavLink";
-
 type Props = {
   locale: string;
 };

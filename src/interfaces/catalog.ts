@@ -1,15 +1,3 @@
-interface imageFormats {
-  thumbnail?: { url: string };
-  small?: { url: string };
-}
-
-interface imageArr {
-  url: string;
-  width: number;
-  height: number;
-  formats?: imageFormats;
-}
-
 export default interface Catalog {
   id: number;
   documentId: string;
@@ -23,5 +11,7 @@ export default interface Catalog {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  image: imageArr;
+  image: {
+    url: string;
+  };
 }
