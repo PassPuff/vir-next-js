@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getLocalsStrapi } from "@/lib/api/get-locales";
 import Container from "@/components/shared/Container";
 import fetchApi from "@/lib/api/strapi";
 import type Catalog from "@/interfaces/catalog";
@@ -14,24 +13,24 @@ type Props = {
 export const dynamicParams = false;
 export const revalidate = 60;
 
-export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  const locales = await getLocalsStrapi();
-
+export async function generateStaticParams({ params }: Props) {
+  const { locale } = await params;
   const categories = await fetchApi<Catalog[]>({
     endpoint: "categories",
     wrappedByKey: "data",
     query: {
       "fields[0]": "slug",
+      "fields[1]": "locale",
     },
+    locale,
   });
 
-  // Для каждой локали генерируем категорию
-  return locales.flatMap((locale) =>
-    categories.map((category: { slug: string }) => ({
-      locale,
-      category: category.slug,
-    })),
-  );
+  if (!categories) notFound();
+
+  return categories.map((category) => ({
+    category: category.slug,
+    locale: category.locale,
+  }));
 }
 
 export default async function CategoryPage({ params }: Props) {
