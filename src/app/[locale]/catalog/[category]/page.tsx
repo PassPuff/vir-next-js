@@ -27,6 +27,8 @@ export async function generateStaticParams({ params }: Props) {
 
   if (!categories) notFound();
 
+  console.log(categories);
+
   return categories.map((category) => ({
     category: category.slug,
     locale: category.locale,
