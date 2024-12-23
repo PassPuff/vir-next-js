@@ -1,15 +1,3 @@
-interface imageFormats {
-  thumbnail?: { url: string };
-  small?: { url: string };
-}
-
-interface imageArr {
-  url: string;
-  width: number;
-  height: number;
-  formats?: imageFormats;
-}
-
 export default interface Product {
   id: number;
   documentId: string;
@@ -23,10 +11,22 @@ export default interface Product {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  imageMain: imageArr;
+  imageMain: {
+    url: string;
+    width: number;
+    height: number;
+    formats?: {
+      thumbnail?: { url: string };
+      small?: { url: string };
+    };
+  };
   category: {
     slug: string;
     name: string;
+    description: string;
+  };
+  data: {
+    title: string;
     description: string;
   };
 }

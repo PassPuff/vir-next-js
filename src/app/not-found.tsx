@@ -3,13 +3,13 @@
 // import Error from "next/error";
 //
 // // Render the default Next.js 404 page when a route
-// // is requested that doesn't match the middleware and
+// // is requested that doesn't match the __middleware and
 // // therefore doesn't have a locale associated with it.
 //
 
 import Link from "next/link";
 
-export default function NotFound() {
+export default function notFound() {
   return (
     <html lang="en">
       <main className="flex flex-col items-center justify-center gap-5 min-h-screen ">

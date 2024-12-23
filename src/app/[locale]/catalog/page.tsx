@@ -5,9 +5,7 @@ import type Catalog from "@/interfaces/catalog";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
 import { notFound } from "next/navigation";
-// import fetchApi from "@/lib/api/strapi";
 
-export const revalidate = 60;
 export const dynamicParams = false;
 
 type Props = {
@@ -26,32 +24,12 @@ const createQueryCatalog = (locale: string) =>
   });
 
 async function getCatalog(locale: string) {
-  // const { locale } = await params;
-  //
-  // const data = await fetchApi<Catalog[]>({
-  //   endpoint: "categories",
-  //   query: {
-  //     "populate[image][fields][0]": "url",
-  //     "fields[0]": "slug",
-  //     "fields[1]": "name",
-  //     "fields[2]": "description",
-  //     "fields[3]": "locale",
-  //   },
-  //   locale: locale,
-  //   wrappedByKey: "data",
-  // });
-  //
-  // return { data, locale };=
-  const authToken = process.env.STRAPI_READ_TOKEN;
-  const BASE_URL = process.env.STRAPI_API_URL;
-  const path = "/api/categories";
-  const url = new URL(path, BASE_URL);
-
-  url.search = createQueryCatalog(locale);
-
-  const data = await fetchAPI(url.href, {
+  const query = createQueryCatalog(locale);
+  const data = await fetchAPI(`/api/categories?${query}`, {
     method: "GET",
-    authToken: authToken,
+    next: {
+      revalidate: 60,
+    },
   });
 
   if (!data) notFound();
@@ -79,7 +57,7 @@ export default async function CatalogPage({ params }: Props) {
           {data.map((catalog: Catalog) => (
             <li key={catalog.id}>
               <Link
-                className="block p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
+                className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200
                 focus:bg-gray-200"
                 href={`/${locale}/catalog/${catalog.slug}`}

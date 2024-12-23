@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/shared/Header";
 import { notFound } from "next/navigation";
 import { getLocalsStrapi } from "@/lib/api/get-locales";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Main page",

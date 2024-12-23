@@ -2,34 +2,56 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/shared/Container";
-import fetchApi from "@/lib/api/strapi";
 import type Catalog from "@/interfaces/catalog";
-import type Product from "@/interfaces/product";
+import qs from "qs";
+import { fetchAPI } from "@/lib/fetch-api";
+import Product from "@/interfaces/product";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
 };
 
 export const dynamicParams = false;
-export const revalidate = 60;
+
+const createQueryCatalog = (locale: string) =>
+  qs.stringify({
+    locale: locale,
+    fields: ["slug", "locale"],
+  });
+
+const createQueryProduct = (locale: string, category: string) =>
+  qs.stringify({
+    populate: {
+      imageMain: {
+        fields: ["url", "alternativeText"],
+      },
+      category: {
+        fields: ["slug"],
+      },
+    },
+    filters: {
+      category: {
+        slug: {
+          $eq: category,
+        },
+      },
+    },
+    locale: locale,
+  });
 
 export async function generateStaticParams({ params }: Props) {
   const { locale } = await params;
-  const categories = await fetchApi<Catalog[]>({
-    endpoint: "categories",
-    wrappedByKey: "data",
-    query: {
-      "fields[0]": "slug",
-      "fields[1]": "locale",
+  const query = createQueryCatalog(locale);
+  const categories = await fetchAPI(`/api/categories?${query}`, {
+    method: "GET",
+    next: {
+      revalidate: 60,
     },
-    locale,
   });
 
   if (!categories) notFound();
 
-  console.log(categories);
-
-  return categories.map((category) => ({
+  return categories.data.map((category: Catalog) => ({
     category: category.slug,
     locale: category.locale,
   }));
@@ -38,20 +60,17 @@ export async function generateStaticParams({ params }: Props) {
 export default async function CategoryPage({ params }: Props) {
   const { category, locale } = await params;
 
-  //Получаем продукты для текущей локали
-  const products = await fetchApi<Product[]>({
-    endpoint: "products",
-    query: {
-      // "populate[imageMain][fields][0]": "url",
-      // "populate[category][fields][0]": "slug",
-      populate: "*",
-      "filters[category][slug][$eq]": category,
+  const query = createQueryProduct(locale, category);
+  const data: { data: Product[] } = await fetchAPI(`/api/products?${query}`, {
+    method: "GET",
+    next: {
+      revalidate: 60,
     },
-    locale,
-    wrappedByKey: "data",
   });
 
-  if (!products) notFound();
+  if (!data) notFound();
+
+  const products = data?.data || [];
 
   return (
     <section>
@@ -68,7 +87,7 @@ export default async function CategoryPage({ params }: Props) {
           {products.map((product) => (
             <li key={product.id}>
               <Link
-                className="block p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
+                className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200
                 focus:bg-gray-200"
                 href={`/${locale}/catalog/${category}/${product.slug}`}
@@ -81,9 +100,15 @@ export default async function CategoryPage({ params }: Props) {
                   height={500}
                 ></Image>
                 <div>
-                  <p>Order Price: {product.orderPrice}</p>
-                  <p>Stock Price: {product.stockPrice}</p>
-                  <p>New Price: {product.newPrice}</p>
+                  {product.orderPrice && (
+                    <p>Order Price: {product.orderPrice} &euro;</p>
+                  )}
+                  {product.stockPrice && (
+                    <p>Stock Price: {product.stockPrice} &euro;</p>
+                  )}
+                  {product.newPrice && (
+                    <p>New Price: {product.newPrice} &euro;</p>
+                  )}
                 </div>
               </Link>
             </li>
