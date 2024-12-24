@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Header from "@/components/shared/Header";
 import { notFound } from "next/navigation";
-import { getLocalsStrapi } from "@/lib/api/get-locales";
-import "@/styles/globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { fetchAPI } from "@/lib/fetch-api";
+import type { Locales } from "@/interfaces/locales";
 
 export const metadata: Metadata = {
   title: "Main page",
@@ -14,29 +16,35 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export const revalidate = 60;
 export const dynamicParams = false;
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  const locales = await getLocalsStrapi();
+  const data: Locales[] = await fetchAPI(`/api/i18n/locales`, {
+    method: "GET",
+    next: {
+      revalidate: 60,
+    },
+  });
 
-  return locales.map((locale) => ({ locale }));
+  if (!data) notFound();
+
+  return data.map((locale) => ({
+    locale: locale.code,
+  }));
 }
 
 export default async function MainLayout({ params, children }: Props) {
   const { locale } = await params;
 
-  const locales = await getLocalsStrapi();
-
-  // Проверка локали
-  // Возвращаем ошибку 404, если локаль не существует
-  if (!locales.includes(locale)) notFound();
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body>
-        <Header locale={locale} />
-        <main>{children}</main>
+        <NextIntlClientProvider messages={messages}>
+          <Header locale={locale} />
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

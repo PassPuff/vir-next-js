@@ -6,7 +6,7 @@
 // // is requested that doesn't match the __middleware and
 // // therefore doesn't have a locale associated with it.
 //
-
+// import { Link } from "@/i18n/routing";
 import Link from "next/link";
 
 export default function notFound() {
@@ -15,7 +15,7 @@ export default function notFound() {
       <main className="flex flex-col items-center justify-center gap-5 min-h-screen ">
         {/*<Error statusCode={404} />*/}
         <p className="text-4xl">Could not find requested resource</p>
-        <Link className="hover:text-yellow-500 text-2xl" href="/public">
+        <Link className="hover:text-yellow-500 text-2xl" href="/">
           Return Home -&gt;
         </Link>
       </main>

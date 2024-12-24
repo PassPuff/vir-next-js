@@ -1,6 +1,9 @@
 {
   "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+    "title": "Bonjour le monde!",
+    "about": "Vai alla pagina di informazioni"
+  },
+  "CatalogPage": {
+    "title": "Catalogue"
   }
 }

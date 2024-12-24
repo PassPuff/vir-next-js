@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import Container from "@/components/shared/Container";
 import type Catalog from "@/interfaces/catalog";
@@ -12,6 +13,14 @@ type Props = {
 };
 
 export const dynamicParams = false;
+
+export async function generateMetadata({ params }: Props) {
+  const { category } = await params;
+
+  return {
+    title: `Category  ${category.replaceAll("-", " ")}`,
+  };
+}
 
 const createQueryCatalog = (locale: string) =>
   qs.stringify({
@@ -90,7 +99,7 @@ export default async function CategoryPage({ params }: Props) {
                 className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200
                 focus:bg-gray-200"
-                href={`/${locale}/catalog/${category}/${product.slug}`}
+                href={`/catalog/${category}/${product.slug}`}
               >
                 <h2 className="text-xl font-bold pb-3">{product.name}</h2>
                 <Image

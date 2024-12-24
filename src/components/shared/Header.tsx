@@ -1,8 +1,8 @@
 import { getCategories } from "@/lib/api/get-categories";
 import Container from "@/components/shared/Container";
-import NavLink from "@/components/shared/MainBanner/NavLink";
-import ButtonToggleTheme from "@/components/ui/ButtonToggleTheme/ButtonToggleTheme";
-import LanguageSwitcher from "@/components/shared/LanguageSwitcher/LanfuageSwitcher";
+import NavLink from "@/components/shared/NavLink";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
+import ButtonToggleTheme from "@/components/shared/ButtonToggleTheme";
 type Props = {
   locale: string;
 };
@@ -11,7 +11,7 @@ export default async function Header({ locale }: Props) {
   const categories = await getCategories(locale);
 
   return (
-    <header className="bg-gray-200 dark:bg-gray-800 py-5 mb-4">
+    <header className="bg-gray-200 dark:bg-gray-800 py-5">
       <Container className="flex justify-between items-center">
         <LanguageSwitcher />
         <nav>

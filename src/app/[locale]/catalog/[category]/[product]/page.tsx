@@ -8,6 +8,14 @@ type Props = {
   params: Promise<{ locale: string; category: string; product: string }>;
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { product } = await params;
+
+  return {
+    title: `${product.replaceAll("-", " ").toUpperCase()}`,
+  };
+}
+
 export const revalidate = 60;
 
 const queryProduct = (locale: string, product?: string) =>

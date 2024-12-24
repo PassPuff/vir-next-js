@@ -2,6 +2,7 @@ import MainBanner from "@/components/shared/MainBanner/MainBanner";
 import { notFound } from "next/navigation";
 import { fetchAPI } from "@/lib/fetch-api";
 import qs from "qs";
+import { getTranslations } from "next-intl/server";
 
 export const dynamicParams = false;
 
@@ -40,14 +41,16 @@ async function fetchMainPageData(locale: string) {
 
 export default async function MainPage({ params }: Props) {
   const { locale } = await params;
-
   const homeBanner = await fetchMainPageData(locale);
-
   if (!homeBanner) notFound();
+
+  const t = await getTranslations("HomePage");
 
   return (
     <>
       <MainBanner homeBanner={homeBanner} />
+
+      <h2 className="text-2xl font-bold mt-10 text-center">{t("title")}</h2>
     </>
   );
 }
