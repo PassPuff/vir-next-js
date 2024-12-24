@@ -15,7 +15,7 @@ export default function notFound() {
       <main className="flex flex-col items-center justify-center gap-5 min-h-screen ">
         {/*<Error statusCode={404} />*/}
         <p className="text-4xl">Could not find requested resource</p>
-        <Link className="hover:text-yellow-500 text-2xl" href="/">
+        <Link className="hover:text-yellow-500 text-2xl" href="/public">
           Return Home -&gt;
         </Link>
       </main>
