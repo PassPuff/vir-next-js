@@ -1,12 +1,9 @@
-import Image from "next/image";
 import Container from "@/components/shared/Container";
-import type Catalog from "@/interfaces/catalog";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
 import { notFound } from "next/navigation";
-// import Link from "next/link";
-import { Link } from "@/i18n/routing";
 import type { Metadata } from "next";
+import CardList from "@/components/shared/Catalog/Card-List/CardList";
 
 export const metadata: Metadata = {
   title: "Catalog page",
@@ -58,29 +55,7 @@ export default async function CatalogPage({ params }: Props) {
         <h1 className="text-4xl font-bold pb-10 text-center">
           <span className="text-yellow-500"> Locale: {locale}</span>
         </h1>
-        <ul className="grid grid-cols-3 gap-10">
-          {data.map((catalog: Catalog) => (
-            <li key={catalog.id}>
-              <Link
-                className="block p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
-                hover:bg-gray-200
-                focus:bg-gray-200"
-                href={`/catalog/${catalog.slug}`}
-                key={catalog.slug}
-              >
-                <h2 className="font-bold pb-3 text-2xl">{catalog.name}</h2>
-                {catalog.image && (
-                  <Image
-                    src={process.env.STRAPI_API_URL + catalog.image.url}
-                    alt={catalog.name}
-                    width={500}
-                    height={500}
-                  />
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <CardList data={data} />
       </Container>
     </section>
   );

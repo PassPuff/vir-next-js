@@ -3,6 +3,7 @@ import Image from "next/image";
 import Container from "@/components/shared/Container";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
+import BlockTabs from "@/components/shared/Main-Page/Tabs";
 
 type Props = {
   params: Promise<{ locale: string; category: string; product: string }>;
@@ -80,9 +81,10 @@ export default async function ProductPage({ params }: Props) {
         <h1 className=" col-span-6 max-w-2xl text-4xl font-bold">
           {products.name}
         </h1>
-        <p className="col-span-6 grid-row-span-2  text-lg">
-          {products.description}
-        </p>
+        <div className="col-span-6 grid-row-span-2  text-lg">
+          <p className="mb-5">{products.description}</p>
+          <p className="font-bold text-3xl">{products.orderPrice} &euro;</p>
+        </div>
 
         {products.imageMain && (
           <Image
@@ -93,6 +95,9 @@ export default async function ProductPage({ params }: Props) {
             height={500}
           />
         )}
+      </Container>
+      <Container>
+        <BlockTabs />
       </Container>
     </section>
   );
