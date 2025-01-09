@@ -3,7 +3,7 @@ import Image from "next/image";
 import Container from "@/components/shared/Container";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
-import BlockTabs from "@/components/shared/Main-Page/Tabs";
+import BlockTabs from "@/components/shared/Tabs";
 
 type Props = {
   params: Promise<{ locale: string; category: string; product: string }>;

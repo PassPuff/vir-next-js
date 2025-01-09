@@ -42,6 +42,7 @@ export async function generateStaticParams(): Promise<{ locale: string }[]> {
   }));
 }
 
+
 export default async function MainLayout({ params, children }: Props) {
   const { locale } = await params;
 
