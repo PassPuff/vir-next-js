@@ -31,9 +31,7 @@ async function getCatalog(locale: string) {
   const query = createQueryCatalog(locale);
   const data = await fetchAPI(`/api/categories?${query}`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   if (!data) notFound();
@@ -52,9 +50,7 @@ export default async function CatalogPage({ params }: Props) {
   return (
     <section>
       <Container>
-        <h1 className="text-4xl font-bold pb-10 text-center">
-          <span className="text-yellow-500"> Locale: {locale}</span>
-        </h1>
+        <h1 className="text-6xl font-bold pb-16">Equipment catalog</h1>
         <CardList data={data} />
       </Container>
     </section>

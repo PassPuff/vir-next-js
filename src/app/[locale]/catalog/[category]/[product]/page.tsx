@@ -17,8 +17,6 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export const revalidate = 60;
-
 const queryProduct = (locale: string, product?: string) =>
   qs.stringify({
     populate: {
@@ -43,9 +41,7 @@ export async function generateStaticParams({ params }: Props) {
     `api/products?populate[category][fields][0]=slug&fields[0]=slug&locale=${locale}`,
     {
       method: "GET",
-      next: {
-        revalidate: 60,
-      },
+      next: { revalidate: 60 },
     },
   );
 
@@ -66,9 +62,7 @@ export default async function ProductPage({ params }: Props) {
 
   const result = await fetchAPI(`/api/products?${query}`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   const products = result.data[0];

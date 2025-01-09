@@ -32,9 +32,7 @@ const myFont = localFont({ src: "../../fonts/Pangram-Light.woff2" });
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
   const data: Locales[] = await fetchAPI(`/api/i18n/locales`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   if (!data) notFound();

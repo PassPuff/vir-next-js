@@ -53,9 +53,7 @@ export async function generateStaticParams({ params }: Props) {
   const query = createQueryCatalog(locale);
   const categories = await fetchAPI(`/api/categories?${query}`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   if (!categories) notFound();
@@ -72,9 +70,7 @@ export default async function CategoryPage({ params }: Props) {
   const query = createQueryProduct(locale, category);
   const data: { data: Product[] } = await fetchAPI(`/api/products?${query}`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   if (!data) notFound();

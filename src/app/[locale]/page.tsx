@@ -8,6 +8,7 @@ export const dynamicParams = false;
 type Props = {
   params: Promise<{ locale: string }>;
 };
+
 // Общая функция для создания запроса
 const createQueryHome = (locale: string) =>
   qs.stringify({
@@ -23,11 +24,10 @@ const createQueryHome = (locale: string) =>
 // Функция для получения главной страницы
 async function fetchMainPageData(locale: string) {
   const query = createQueryHome(locale);
+
   const data = await fetchAPI(`/api/main?${query}`, {
     method: "GET",
-    next: {
-      revalidate: 60,
-    },
+    next: { revalidate: 60 },
   });
 
   if (!data) notFound();

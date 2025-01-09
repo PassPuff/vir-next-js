@@ -1,17 +1,38 @@
-import { getCategories } from "@/lib/api/get-categories";
 import Container from "@/components/shared/Container";
 import NavLink from "@/components/shared/NavLink";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import ButtonToggleTheme from "@/components/shared/ButtonToggleTheme";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { fetchAPI } from "@/lib/fetch-api";
+import { notFound } from "next/navigation";
+import type Catalog from "@/interfaces/catalog";
+import qs from "qs";
 
 type Props = {
   locale: string;
 };
 
+const createQueryCatalog = (locale: string) =>
+  qs.stringify({
+    locale: locale,
+    fields: ["slug", "locale", "name"],
+  });
+
+export async function getCategoriesMenu(locale: string) {
+  const query = createQueryCatalog(locale);
+  const categories = await fetchAPI(`/api/categories?${query}`, {
+    method: "GET",
+    next: { revalidate: 3600 },
+  });
+
+  if (!categories) notFound();
+
+  return categories.data;
+}
+
 export default async function Header({ locale }: Props) {
-  const categories = await getCategories(locale);
+  const categories: Catalog[] = await getCategoriesMenu(locale);
 
   return (
     <header className="dark:bg-gray-800 shadow-xl  py-5 mb-10">
