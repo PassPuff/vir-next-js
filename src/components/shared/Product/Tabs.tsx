@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Tabs } from "@base-ui-components/react/tabs";
+// import { Tabs } from "@base-ui-components/react/tabs";
 import Container from "@/components/shared/Container";
 
 export default function BlockTabs() {

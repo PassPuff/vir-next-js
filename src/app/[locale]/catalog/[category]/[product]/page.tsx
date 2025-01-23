@@ -73,7 +73,7 @@ export default async function ProductPage({ params }: Props) {
     <>
       <Summary products={products} />
 
-      <BlockTabs />
+      {/*<BlockTabs />*/}
     </>
   );
 }
