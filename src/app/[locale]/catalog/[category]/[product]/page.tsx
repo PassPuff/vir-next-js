@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Container from "@/components/shared/Container";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
-import BlockTabs from "@/components/shared/Tabs";
+import BlockTabs from "@/components/shared/Product/Tabs";
+import Summary from "@/components/shared/Product/Summary";
 
 type Props = {
   params: Promise<{ locale: string; category: string; product: string }>;
@@ -70,29 +70,10 @@ export default async function ProductPage({ params }: Props) {
   if (!products) notFound();
 
   return (
-    <section>
-      <Container className="relative grid grid-cols-12 auto-rows-auto grid-flow-col dense gap-x-2.5">
-        <h1 className=" col-span-6 max-w-2xl text-4xl font-bold">
-          {products.name}
-        </h1>
-        <div className="col-span-6 grid-row-span-2  text-lg">
-          <p className="mb-5">{products.description}</p>
-          <p className="font-bold text-3xl">{products.orderPrice} &euro;</p>
-        </div>
+    <>
+      <Summary products={products} />
 
-        {products.imageMain && (
-          <Image
-            className="col-span-6 row-span-2"
-            src={process.env.STRAPI_API_URL + products.imageMain.url}
-            alt={products.name}
-            width={500}
-            height={500}
-          />
-        )}
-      </Container>
-      <Container>
-        <BlockTabs />
-      </Container>
-    </section>
+      <BlockTabs />
+    </>
   );
 }

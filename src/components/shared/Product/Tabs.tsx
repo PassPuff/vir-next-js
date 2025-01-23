@@ -1,60 +1,65 @@
 "use client";
 import React from "react";
 import { Tabs } from "@base-ui-components/react/tabs";
+import Container from "@/components/shared/Container";
 
 export default function BlockTabs() {
   return (
-    <Tabs.Root className="" defaultValue="overview" orientation="vertical">
-      <Tabs.List className="flex space-x-2 p-2">
-        <Tabs.Tab className="px-4 py-2 font-bold" value="overview">
-          Dimensions
-        </Tabs.Tab>
-        <Tabs.Tab className="px-4 py-2 font-bold" value="projects">
-          Materials Table
-        </Tabs.Tab>
-        <Tabs.Tab className="px-4 py-2 font-bold" value="account">
-          Optics
-        </Tabs.Tab>
-        <Tabs.Indicator className="bg-gray-200 h-0.5" />
-      </Tabs.List>
-      <Tabs.Panel className="p-4 w-full" value="overview">
-        <dl className="flex gap-24">
-          <dt>Packing size:</dt>
-          <dd>765 x 1140 x 710 mm</dd>
-        </dl>
-        <dl className="flex gap-24">
-          <dt>Working area:</dt>
-          <dd>500x300 mm</dd>
-        </dl>
-        <dl className="flex  gap-24">
-          <dt>Lifting table:</dt>
-          <dd>Yes</dd>
-        </dl>
-      </Tabs.Panel>
-      <Tabs.Panel className="p-4" value="projects">
-        <dl className="flex gap-24">
-          <dt>Materials:</dt>
-          <dd>
-            Plywood, Cardboard, MDF and chipboard, Plexiglas, Wood, Paper,
-            Acrylic, Stone, Rubber, Plastic, Paronite
-          </dd>
-        </dl>
-      </Tabs.Panel>
-      <Tabs.Panel className="p-4" value="account">
-        <dl className="flex gap-24">
-          <dt>Positioning precision:</dt>
-          <dd>0,03 mm</dd>
-        </dl>
-        <dl className="flex gap-24">
-          <dt>ZnSe lens:</dt>
-          <dd>18</dd>
-        </dl>
-        <dl className="flex  gap-24">
-          <dt>Min. letter size for engraving:</dt>
-          <dd>1x1 mm</dd>
-        </dl>
-      </Tabs.Panel>
-    </Tabs.Root>
+    <section>
+      <Container>
+        <Tabs.Root className="" defaultValue="overview" orientation="vertical">
+          <Tabs.List className="flex space-x-2 p-2">
+            <Tabs.Tab className="px-4 py-2 font-bold" value="overview">
+              Dimensions
+            </Tabs.Tab>
+            <Tabs.Tab className="px-4 py-2 font-bold" value="projects">
+              Materials Table
+            </Tabs.Tab>
+            <Tabs.Tab className="px-4 py-2 font-bold" value="account">
+              Optics
+            </Tabs.Tab>
+            <Tabs.Indicator className="bg-gray-200 h-0.5" />
+          </Tabs.List>
+          <Tabs.Panel className="p-4 w-full" value="overview">
+            <dl className="flex gap-24">
+              <dt>Packing size:</dt>
+              <dd>765 x 1140 x 710 mm</dd>
+            </dl>
+            <dl className="flex gap-24">
+              <dt>Working area:</dt>
+              <dd>500x300 mm</dd>
+            </dl>
+            <dl className="flex  gap-24">
+              <dt>Lifting table:</dt>
+              <dd>Yes</dd>
+            </dl>
+          </Tabs.Panel>
+          <Tabs.Panel className="p-4" value="projects">
+            <dl className="flex gap-24">
+              <dt>Materials:</dt>
+              <dd>
+                Plywood, Cardboard, MDF and chipboard, Plexiglas, Wood, Paper,
+                Acrylic, Stone, Rubber, Plastic, Paronite
+              </dd>
+            </dl>
+          </Tabs.Panel>
+          <Tabs.Panel className="p-4" value="account">
+            <dl className="flex gap-24">
+              <dt>Positioning precision:</dt>
+              <dd>0,03 mm</dd>
+            </dl>
+            <dl className="flex gap-24">
+              <dt>ZnSe lens:</dt>
+              <dd>18</dd>
+            </dl>
+            <dl className="flex  gap-24">
+              <dt>Min. letter size for engraving:</dt>
+              <dd>1x1 mm</dd>
+            </dl>
+          </Tabs.Panel>
+        </Tabs.Root>
+      </Container>
+    </section>
   );
 }
 //
