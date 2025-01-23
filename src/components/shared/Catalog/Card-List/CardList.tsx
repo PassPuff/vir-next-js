@@ -8,7 +8,7 @@ export default function CardList({ data }: { data: Catalog[] }) {
       {data.map((catalog: Catalog) => (
         <li key={catalog.id}>
           <Link
-            className="block grayscale p-4 h-full bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
+            className="block grayscale p-4 h-full bg-gray-100 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200 hover:grayscale-0
                 focus:bg-gray-200 focus:grayscale-0"
             href={`/catalog/${catalog.slug}`}

@@ -12,8 +12,8 @@ export default async function Banner({ homeBanner }: { homeBanner: Main }) {
       <Image
         src={urlBg}
         alt={homeBanner.title}
-        width={400}
-        height={300}
+        width={1920}
+        height={720}
         className="w-full h-auto object-cover"
       />
       <Container className="absolute inset-0 flex justify-center flex-col text-white">

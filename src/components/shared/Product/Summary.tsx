@@ -11,7 +11,10 @@ export default function Summary({ products }: { products: Product }) {
         </h1>
         <div className="col-span-6 grid-row-span-2  text-lg">
           <p className="mb-5">{products.description}</p>
-          <p className="font-bold text-3xl">{products.orderPrice} &euro;</p>
+          <p className="font-bold text-3xl">
+            {products.orderPrice ? products.orderPrice : products.stockPrice}
+            &euro;
+          </p>
         </div>
 
         {products.imageMain && (

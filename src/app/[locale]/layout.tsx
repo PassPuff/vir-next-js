@@ -51,12 +51,12 @@ export default async function MainLayout({ params, children }: Props) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <div className="Root">
-            <Header locale={locale} />
-            <main className={cn(myFont.className, "antialiased")}>
-              {children}
-            </main>
-          </div>
+          {/*<div>*/}
+          <Header locale={locale} />
+          <main className={cn(myFont.className, "antialiased")}>
+            {children}
+          </main>
+          {/*</div>*/}
         </NextIntlClientProvider>
       </body>
     </html>

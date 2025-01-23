@@ -1,7 +1,7 @@
 import Container from "@/components/shared/Container";
 import NavLink from "@/components/shared/NavLink";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
-import ButtonToggleTheme from "@/components/shared/ButtonToggleTheme";
+// import ButtonToggleTheme from "@/components/shared/ButtonToggleTheme";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { fetchAPI } from "@/lib/fetch-api";
@@ -35,7 +35,7 @@ export default async function Header({ locale }: Props) {
   const categories: Catalog[] = await getCategoriesMenu(locale);
 
   return (
-    <header className="dark:bg-gray-800 shadow-xl  py-5 mb-10">
+    <header className="shadow-xl  py-5 mb-10">
       <Container className="flex items-center gap-14">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={50} height={50} />
@@ -54,7 +54,7 @@ export default async function Header({ locale }: Props) {
             ))}
           </ul>
         </nav>
-        <ButtonToggleTheme />
+        {/*<ButtonToggleTheme />*/}
       </Container>
     </header>
   );

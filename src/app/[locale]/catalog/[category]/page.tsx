@@ -92,7 +92,7 @@ export default async function CategoryPage({ params }: Props) {
           {products.map((product) => (
             <li key={product.id}>
               <Link
-                className="block h-full p-4 bg-gray-100 dark:bg-gray-800 rounded-2xl transition duration-300 ease-in-out
+                className="block h-full p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200
                 focus:bg-gray-200"
                 href={`/catalog/${category}/${product.slug}`}
