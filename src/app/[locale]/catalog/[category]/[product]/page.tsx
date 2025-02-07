@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 // import Container from "@/components/shared/Container";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
-import BlockTabs from "@/components/shared/Product/Tabs";
+// import BlockTabs from "@/components/shared/Product/Tabs";
 import Summary from "@/components/shared/Product/Summary";
 
 type Props = {

@@ -77,6 +77,8 @@ export default async function CategoryPage({ params }: Props) {
 
   const products = data?.data || [];
 
+  console.log(products);
+
   return (
     <section>
       <Container>
@@ -105,13 +107,13 @@ export default async function CategoryPage({ params }: Props) {
                   height={500}
                 ></Image>
                 <div>
-                  {product.orderPrice && (
+                  {product.orderPrice > 0 && (
                     <p>Order Price: {product.orderPrice} &euro;</p>
                   )}
-                  {product.stockPrice && (
+                  {product.stockPrice > 0 && (
                     <p>Stock Price: {product.stockPrice} &euro;</p>
                   )}
-                  {product.newPrice && (
+                  {product.newPrice > 0 && (
                     <p>New Price: {product.newPrice} &euro;</p>
                   )}
                 </div>
