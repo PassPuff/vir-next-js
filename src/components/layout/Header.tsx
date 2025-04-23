@@ -37,7 +37,7 @@ export default async function Header({ locale }: Props) {
   return (
     <header className="shadow-xl  py-5 mb-10">
       <Container className="flex items-center gap-14">
-        <Link href="/">
+        <Link href="/public">
           <Image src="/logo.svg" alt="logo" width={50} height={50} />
         </Link>
         <LanguageSwitcher />

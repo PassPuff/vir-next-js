@@ -77,7 +77,7 @@ export default async function CategoryPage({ params }: Props) {
 
   const products = data?.data || [];
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <section>

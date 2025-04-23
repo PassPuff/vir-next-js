@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 interface ContainerProps {
   className?: string;
@@ -7,6 +7,6 @@ interface ContainerProps {
 
 export default function Container({ className, children }: ContainerProps) {
   return (
-    <div className={clsx("mx-auto max-w-[1280px]", className)}>{children}</div>
+    <div className={cn("mx-auto max-w-[1280px]", className)}>{children}</div>
   );
 }
