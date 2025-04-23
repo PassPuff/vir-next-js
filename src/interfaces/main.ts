@@ -1,67 +1,73 @@
 export interface Link {
-  id: number;
-  href: string;
-  label: string;
-  isExternal: boolean;
-  isButtonLink: boolean;
-  type: string;
+	id: number;
+	href: string;
+	label: string;
+	isExternal: boolean;
+	isButtonLink: boolean;
+	type: string;
 }
 
 export interface Image {
-  id: number;
-  documentId: string;
-  url: string;
-  alternativeText: string | null;
+	id: number;
+	documentId: string;
+	url: string;
+	alternativeText: string | null;
+}
+
+export interface Video {
+	id: number;
+	documentId: string;
+	url: string;
 }
 
 export interface HeroBanner {
-  id: number;
-  title: string;
-  description: string;
-  isActive: boolean;
-  isSpecial: boolean;
-  link: Link;
-  image: Image;
-  video: string;
+	id: number;
+	title: string;
+	description: string;
+	isActive: boolean;
+	isSpecial: boolean;
+	link: Link;
+	image: Image;
+	video: Video;
 }
 
 export interface SectionMissionBlock {
-  __component: "blocks.section-mission";
-  id: number;
-  subHeading: string;
-  heading: string;
+	__component: "blocks.section-mission";
+	id: number;
+	subHeading: string;
+	heading: string;
 }
 
 export interface PurchaseProcedureCard {
-  id: number;
-  title: string;
-  description: string;
-  image: Image | null;
+	id: number;
+	title: string;
+	description: string;
+	image: Image | null;
 }
 
 export interface SectionPurchaseProcedureBlock {
-  __component: "blocks.section-purchase-procedure";
-  id: number;
-  header: string;
-  cards: PurchaseProcedureCard[];
+	__component: "blocks.section-purchase-procedure";
+	id: number;
+	header: string;
+	cards: PurchaseProcedureCard[];
 }
 
 export type Block = SectionMissionBlock | SectionPurchaseProcedureBlock;
 
 export interface Data {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  locale: string;
-  heroBanner: HeroBanner[];
-  blocks: Block[];
+	id: number;
+	documentId: string;
+	title: string;
+	description: string;
+	createdAt: string;
+	updatedAt: string;
+	publishedAt: string;
+	locale: string;
+	heroBanner: HeroBanner[];
+	blocks: Block[];
 }
 
 export interface ApiResponse {
-  data: Data;
-  meta: Record<string, unknown>;
+	data: Data;
+	meta: Record<string, unknown>;
 }

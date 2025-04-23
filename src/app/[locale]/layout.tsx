@@ -9,20 +9,20 @@ import type { Locales } from "@/interfaces/locales";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title:
-    "Virmer is the supplier of CNC machines laser and router equipment at prices from the manufacturer",
-  description:
-    "We supply CNC machines, laser and router equipment with a manufacturer's warranty ⭐ WATTSAN ⭐. Service and delivery In the Netherlands and throughout Europe",
-  icons: {
-    icon: ["/favicon.ico?v=0.1"],
-    apple: ["/apple-touch-icon.png?v=0.1"],
-    shortcut: ["/apple-touch-icon.png?v=0.1"],
-  },
+	title:
+		"Virmer is the supplier of CNC machines laser and router equipment at prices from the manufacturer",
+	description:
+		"We supply CNC machines, laser and router equipment with a manufacturer's warranty ⭐ WATTSAN ⭐. Service and delivery In the Netherlands and throughout Europe",
+	icons: {
+		icon: ["/favicon.ico?v=0.1"],
+		apple: ["/apple-touch-icon.png?v=0.1"],
+		shortcut: ["/apple-touch-icon.png?v=0.1"],
+	},
 };
 
 type Props = {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
 };
 
 export const dynamicParams = false;
@@ -30,37 +30,38 @@ export const dynamicParams = false;
 const myFont = localFont({ src: "../../fonts/Pangram-Light.woff2" });
 
 export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  const data: Locales[] = await fetchAPI(`/api/i18n/locales`, {
-    method: "GET",
-    next: { revalidate: 60 },
-  });
+	const data: Locales[] = await fetchAPI(`/api/i18n/locales`, {
+		method: "GET",
+		next: { revalidate: 60 },
+	});
 
-  if (!data) notFound();
+	if (!data) notFound();
 
-  return data.map((locale) => ({
-    locale: locale.code,
-  }));
+	return data.map((locale) => ({
+		locale: locale.code,
+	}));
 }
 
 export default async function MainLayout({ params, children }: Props) {
-  const { locale } = await params;
+	const { locale } = await params;
 
-  const messages = await getMessages();
+	const messages = await getMessages();
 
-  return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <div>
-            <h1>{locale}</h1>
+	return (
+		<html lang={locale}>
+			<body>
+				<NextIntlClientProvider messages={messages}>
+					<div>
 
-            {/*<Header locale={locale} />*/}
-            <main className={cn(myFont.className, "antialiased")}>
-              {children}
-            </main>
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+						{/*<Header locale={locale} />*/}
+						<main className={cn(myFont.className, "antialiased")}>
+							{children}
+						</main>
+						<h1>{locale}</h1>
+
+					</div>
+				</NextIntlClientProvider>
+			</body>
+		</html>
+	);
 }
