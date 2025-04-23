@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useCarousel } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
-export const CarouselDots = React.forwardRef(({ className, ...props }, ref) => {
+
+interface CarouselDotsProps extends React.HTMLAttributes<HTMLDivElement> {
+	className?: string;
+}
+
+export const CarouselDots = React.forwardRef<HTMLDivElement, CarouselDotsProps>(({ className, ...props }, ref) => {
 	const { api } = useCarousel();
 
 	const [currentSlide, setCurrentSlide] = React.useState(0);

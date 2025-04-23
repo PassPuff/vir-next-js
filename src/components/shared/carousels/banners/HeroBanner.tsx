@@ -1,13 +1,7 @@
 import Image from "next/image";
 import type { HeroBanner } from "@/interfaces/main";
 import Container from "@/components/shared/Container";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { CarouselDots } from "@/components/shared/carousels/CarouselDots";
 
 export default async function HeroBanner({
@@ -37,8 +31,6 @@ export default async function HeroBanner({
 						</CarouselItem>
 					))}
 				</CarouselContent>
-				{/* <CarouselNext className="right-5" />
-				<CarouselPrevious className="left-5" /> */}
 				<CarouselDots className="absolute bottom-4 left-0 right-0" />
 			</Carousel>
 		</section>
