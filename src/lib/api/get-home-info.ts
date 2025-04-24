@@ -1,4 +1,4 @@
-import type Main from "@/interfaces/main";
+import type Main from "@/types/main-page";
 import fetchApi from "@/lib/api/strapi";
 
 export async function getHomeInfo(locale: string) {

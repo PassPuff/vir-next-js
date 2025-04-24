@@ -3,10 +3,10 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import Container from "@/components/shared/Container";
-import type Catalog from "@/interfaces/catalog";
+import type Catalog from "@/types/catalog";
 import qs from "qs";
 import { fetchAPI } from "@/lib/fetch-api";
-import Product from "@/interfaces/product";
+import Product from "@/types/product";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;

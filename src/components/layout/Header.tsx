@@ -6,7 +6,7 @@ import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { fetchAPI } from "@/lib/fetch-api";
 import { notFound } from "next/navigation";
-import type Catalog from "@/interfaces/catalog";
+import type Catalog from "@/types/catalog";
 import qs from "qs";
 
 type Props = {

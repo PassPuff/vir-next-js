@@ -1,4 +1,4 @@
-import type Product from "@/interfaces/product";
+import type Product from "@/types/product";
 import fetchApi from "@/lib/api/strapi";
 
 export async function getProducts(locale: string) {

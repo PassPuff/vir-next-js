@@ -1,6 +1,6 @@
 import Container from "@/components/shared/Container";
 import Image from "next/image";
-import type Product from "@/interfaces/product";
+import type Product from "@/types/product";
 
 export default function Summary({ products }: { products: Product }) {
   return (

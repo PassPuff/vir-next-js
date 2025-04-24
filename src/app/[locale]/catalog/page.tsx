@@ -36,8 +36,8 @@ async function getCatalog(locale: string) {
 
   if (!data) notFound();
 
-  // const blocks = data?.data?.blocks || [];
-  // return { blocks };
+  // const sections = data?.data?.sections || [];
+  // return { sections };
 
   return data?.data || null;
 }

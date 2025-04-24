@@ -1,4 +1,4 @@
-import type Catalog from "@/interfaces/catalog";
+import type Catalog from "@/types/catalog";
 import fetchApi from "@/lib/api/strapi";
 
 export async function getCategories(locale?: string) {

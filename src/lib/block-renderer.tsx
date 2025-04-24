@@ -1,18 +1,11 @@
-/*
 import type { Block } from "@/types";
-
-import { Hero, Heading, CardCarousel } from "@/components/blocks";
+import ChoiceMain from "@/components/shared/sections/ChoiceMain";
 
 export function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
-    case "blocks.hero":
-      return <Hero {...block} key={index} />;
-    case "blocks.card-carousel":
-      return <CardCarousel {...block} key={index} />;
-    case "blocks.heading":
-      return <Heading {...block} key={index} />;
+    case "blocks.section-choice":
+      return <ChoiceMain {...block} key={index} />;
     default:
       return null;
   }
 }
-*/

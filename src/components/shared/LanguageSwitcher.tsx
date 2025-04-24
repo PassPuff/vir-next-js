@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 // import Link from "next/link";
-import type { Locales } from "@/interfaces/locales";
+import type { Locales } from "@/types/locales";
 
 export default function LanguageSwitcher() {
   const [locales, setLocales] = useState<Locales[]>([]);

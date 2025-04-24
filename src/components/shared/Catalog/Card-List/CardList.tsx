@@ -1,4 +1,4 @@
-import type Catalog from "@/interfaces/catalog";
+import type Catalog from "@/types/catalog";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 
