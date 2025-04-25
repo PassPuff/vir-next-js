@@ -10,18 +10,33 @@ export default function ChoiceMain({
   text,
 }: SectionMissionProps) {
   return (
-    <section className="py-20">
-      <Container className="text-center">
-        <p className="text-4xl">{subHeading}</p>
-        <h2
-          className="text-8xl mb-10"
-          dangerouslySetInnerHTML={{ __html: heading || [] }}
-        />
+    <section className="py-20 bg-[var(--gray-light)] ">
+      <Container className="py-10">
+        <header
+          data-heding={subHeading}
+          className="relative text-center
+                      before:content-[attr(data-heding)]
+                      before:absolute
+                      before:left-0
+                      before:bottom-0
+                      before:z-[2]
+                      before:text-[250px]
+                      before:font-bold
+                      before:leading-[0.6]
+                      before:text-[#fffef8]
+                      before:blur-xs"
+        >
+          <p className="relative z-3 text-4xl">{subHeading}</p>
+          <h2
+            className="relative z-3 text-8xl mb-10"
+            dangerouslySetInnerHTML={{ __html: heading || [] }}
+          />
+        </header>
       </Container>
 
       <div className="grid grid-cols-12  grid-rows-subgrid gap-7">
         <Image
-          className="col-span-5 row-1 object-cover -mb-60 z-10 w-max"
+          className="col-span-5 row-1 object-cover -mb-90 z-10 w-max"
           src={image?.url || "/default-image.jpg"}
           alt={image?.alternativeText + " test"}
           width={700}

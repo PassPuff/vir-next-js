@@ -10,12 +10,14 @@ export default function BenefitsMain({
 }: SectionBenefitsProps) {
   return (
     <section className="py-20">
-      <Container className="text-center">
-        <h2
-          className="text-8xl mb-10"
-          dangerouslySetInnerHTML={{ __html: title || [] }}
-        />
-      </Container>
+      <header className="bg-black text-white">
+        <Container className="text-center">
+          <h2
+            className="text-8xl pb-10"
+            dangerouslySetInnerHTML={{ __html: title || [] }}
+          />
+        </Container>
+      </header>
 
       <div className="grid grid-cols-12  grid-rows-subgrid gap-7">
         <Image
