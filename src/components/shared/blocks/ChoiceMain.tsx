@@ -15,7 +15,7 @@ export default function ChoiceMain({ title, text, image }: SectionChoiceProps) {
       <div className="grid grid-cols-12 gap-7 items-center">
         <Image
           className="col-start-1 col-span-6 object-cover h-max"
-          src={image?.url || "/default-image.jpg"}
+          src={image?.url || "/icon-512.png"}
           alt={image?.alternativeText + " test"}
           width={890}
           height={430}

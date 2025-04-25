@@ -56,7 +56,6 @@ export default async function MainLayout({ params, children }: Props) {
             <main className={cn(myFont.className, "antialiased")}>
               {children}
             </main>
-            <h1>{locale}</h1>
           </div>
         </NextIntlClientProvider>
       </body>
