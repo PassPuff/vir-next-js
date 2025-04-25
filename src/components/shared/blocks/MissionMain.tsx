@@ -16,7 +16,7 @@ export default function MissionMain({
         <header
           data-heding={subHeading}
           className={cn(
-            "relative text-cent",
+            "relative text-center",
             "before:content-[attr(data-heding)] before:absolute before:left-0 before:bottom-0 before:z-[2] before:text-[250px] before:font-bold before:leading-[0.6] before:text-[#fffef8] before:blur-xs",
           )}
         >
