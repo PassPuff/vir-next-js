@@ -1,4 +1,4 @@
-import HeroBanner from "@/components/shared/carousels/banners/HeroBanner";
+import HeroBanner from "@/components/shared/blocks/carousels/banners/HeroBanner";
 import { notFound } from "next/navigation";
 import { fetchAPI } from "@/lib/fetch-api";
 import { blockRenderer } from "@/lib/block-renderer";

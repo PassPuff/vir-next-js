@@ -4,7 +4,8 @@ import { type BlocksContent } from "@strapi/blocks-react-renderer";
 type ComponentType =
   | "blocks.section-choice"
   | "blocks.section-mission"
-  | "blocks.section-purchase-procedure";
+  | "blocks.section-purchase-procedure"
+  | "blocks.section-benefits";
 
 interface Base<
   T extends ComponentType,
@@ -22,7 +23,8 @@ interface Base<
 export type Block =
   | SectionChoiceProps
   | SectionMissionProps
-  | SectionPurchaseProcedureProps;
+  | SectionPurchaseProcedureProps
+  | SectionBenefitsProps;
 
 export interface SectionChoiceProps extends Base<"blocks.section-choice"> {
   id: number;
@@ -35,6 +37,15 @@ export interface SectionMissionProps extends Base<"blocks.section-mission"> {
   id: number;
   subHeading?: string;
   heading?: string;
+  text?: BlocksContent;
+  image?: ImageProps;
+}
+
+interface PurchaseProcedureCard {
+  id: number;
+  title: string;
+  description: string;
+  image: ImageProps | null;
 }
 
 export interface SectionPurchaseProcedureProps
@@ -44,9 +55,9 @@ export interface SectionPurchaseProcedureProps
   cards?: PurchaseProcedureCard[];
 }
 
-interface PurchaseProcedureCard {
+export interface SectionBenefitsProps extends Base<"blocks.section-benefits"> {
   id: number;
   title: string;
-  description: string;
-  image: ImageProps | null;
+  text?: BlocksContent;
+  image?: ImageProps;
 }

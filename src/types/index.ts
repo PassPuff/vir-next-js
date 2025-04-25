@@ -3,6 +3,7 @@ import type {
   SectionChoiceProps,
   SectionMissionProps,
   SectionPurchaseProcedureProps,
+  SectionBenefitsProps,
   Block,
 } from "./blocks";
 
@@ -12,5 +13,6 @@ export type {
   SectionChoiceProps,
   SectionMissionProps,
   SectionPurchaseProcedureProps,
+  SectionBenefitsProps,
   Block,
 };
