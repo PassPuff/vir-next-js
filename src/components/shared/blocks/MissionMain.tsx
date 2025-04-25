@@ -3,7 +3,7 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import type { SectionMissionProps } from "@/types/blocks";
 
-export default function ChoiceMain({
+export default function MissionMain({
   subHeading,
   heading,
   image,
