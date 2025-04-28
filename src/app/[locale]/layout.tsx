@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { cn } from "@/lib/utils";
 import { getMessages } from "next-intl/server";
 import { fetchAPI } from "@/lib/fetch-api";
-import type { Locales } from "@/types/locales";
+import type { Locales } from "@/types/base";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

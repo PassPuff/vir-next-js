@@ -1,4 +1,3 @@
-import HeroBanner from "@/components/shared/blocks/carousels/banners/HeroBanner";
 import { notFound } from "next/navigation";
 import { fetchAPI } from "@/lib/fetch-api";
 import { blockRenderer } from "@/lib/block-renderer";
@@ -32,7 +31,7 @@ export default async function MainPage({ params }: Props) {
 
   return (
     <>
-      <HeroBanner homeBanner={data.heroBanner} />
+      {/*<HeroBanner homeBanner={data.heroBanner} />*/}
       {blocks.map((block: Block, index: number) => {
         return blockRenderer(block, index);
       })}

@@ -6,19 +6,14 @@ import { CarouselDots } from "@/components/shared/blocks/carousels/CarouselDots"
 import { buttonVariants } from "@/components/ui/button";
 import WrapperCarousel from "@/components/shared/blocks/carousels/wrapperCarousel";
 import { cn } from "@/lib/utils";
+import { SectionHeroBannerProps } from "@/types";
 
-import type { HeroBanner } from "@/types/main-page";
-
-export default async function HeroBanner({
-  homeBanner,
-}: {
-  homeBanner: HeroBanner[];
-}) {
+export default async function HeroBanner({ slides }: SectionHeroBannerProps) {
   return (
     <section>
       <WrapperCarousel autoplay={false} autoplayDelay={5000} fade={true}>
         <CarouselContent>
-          {homeBanner.map((item) => (
+          {slides?.map((item) => (
             <CarouselItem key={item.id} className="relative h-[88dvh]">
               <div className="absolute -z-10 top-0 bottom-0 brightness-50 w-full">
                 {item.video ? (
