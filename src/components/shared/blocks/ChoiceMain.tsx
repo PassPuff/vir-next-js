@@ -2,6 +2,7 @@ import Container from "@/components/shared/Container";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import type { SectionChoiceProps } from "@/types/blocks";
+import { cn } from "@/lib/utils";
 
 export default function ChoiceMain({ title, text, image }: SectionChoiceProps) {
   return (
@@ -14,13 +15,21 @@ export default function ChoiceMain({ title, text, image }: SectionChoiceProps) {
       </Container>
       <div className="grid grid-cols-12 gap-7 items-center">
         <Image
-          className="col-start-1 col-span-6 object-cover h-max"
+          className={cn(
+            "col-start-1 col-span-6 object-cover h-max",
+            "max-md:col-span-12",
+          )}
           src={image?.url || "/icon-512.png"}
           alt={image?.alternativeText + " test"}
           width={890}
           height={430}
         />
-        <div className="col-start-7 col-span-5 text-xl">
+        <div
+          className={cn(
+            "col-start-7 col-span-5 text-xl",
+            "max-md:col-span-12 max-md:px-5",
+          )}
+        >
           <BlocksRenderer content={text || []} />
         </div>
       </div>

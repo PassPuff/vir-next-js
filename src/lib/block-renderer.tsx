@@ -8,12 +8,12 @@ export function blockRenderer(block: Block, index: number) {
   switch (block.__component) {
     case "blocks.section-hero-banner":
       return <HeroBanner {...block} key={index} />;
-    // case "blocks.section-choice":
-    //   return <ChoiceMain {...block} key={index} />;
-    // case "blocks.section-mission":
-    //   return <MissionMain {...block} key={index} />;
-    // case "blocks.section-benefits":
-    //   return <BenefitsMain {...block} key={index} />;
+    case "blocks.section-choice":
+      return <ChoiceMain {...block} key={index} />;
+    case "blocks.section-mission":
+      return <MissionMain {...block} key={index} />;
+    case "blocks.section-benefits":
+      return <BenefitsMain {...block} key={index} />;
     default:
       return null;
   }

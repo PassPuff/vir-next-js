@@ -13,7 +13,12 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import Container from "@/components/shared/Container";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 const catalogLinks = [
@@ -41,7 +46,7 @@ export default function Navbar() {
   return (
     <header className="w-full shadow-md">
       {/*Верхний ряд */}
-      <div className="bg-black text-white px-4 py-2 text-sm">
+      <div className="bg-black text-white  py-2 text-sm">
         <Container className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Язык */}
@@ -80,7 +85,13 @@ export default function Navbar() {
         <Container className="flex items-center justify-between">
           {/*Логотип*/}
           <Link href="/">
-            <Image src="/logo.svg" alt="Virmer Logo" width={50} height={50} />
+            <Image
+              src="/logo.svg"
+              alt="Virmer Logo"
+              className="w-auto h-auto max-w-12"
+              width={50}
+              height={50}
+            />
           </Link>
 
           {/* Десктоп каталог */}
@@ -116,8 +127,12 @@ export default function Navbar() {
                 <button>{open ? <X size={32} /> : <Menu size={32} />}</button>
               </SheetTrigger>
 
-              <SheetContent side="left" className="w-10/12 p-6">
-                <DialogTitle className="sr-only">Main menu</DialogTitle>
+              <SheetContent
+                aria-describedby={undefined}
+                side="left"
+                className="w-10/12 p-6"
+              >
+                <SheetTitle className="sr-only">Main menu</SheetTitle>
 
                 <div className="space-y-6">
                   {/* Каталог оборудования */}
