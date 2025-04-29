@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-// import Header from "@/components/layout/Header";
+import Header from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
 import { getMessages } from "next-intl/server";
 import { fetchAPI } from "@/lib/fetch-api";
@@ -52,7 +52,7 @@ export default async function MainLayout({ params, children }: Props) {
       <body>
         <NextIntlClientProvider messages={messages}>
           <div>
-            {/*<Header locale={locale} />*/}
+            <Header />
             <main className={cn(myFont.className, "antialiased")}>
               {children}
             </main>
