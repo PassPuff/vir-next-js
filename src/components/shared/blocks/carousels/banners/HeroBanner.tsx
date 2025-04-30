@@ -10,11 +10,11 @@ import { SectionHeroBannerProps } from "@/types";
 
 export default async function HeroBanner({ slides }: SectionHeroBannerProps) {
   return (
-    <section>
+    <section className="pt-[12dvh]">
       <WrapperCarousel autoplay={false} autoplayDelay={5000} fade={true}>
         <CarouselContent>
           {slides?.map((item) => (
-            <CarouselItem key={item.id} className="relative h-[88dvh]">
+            <CarouselItem key={item.id} className="relative  h-[88dvh]">
               <div className="absolute -z-10 top-0 bottom-0 brightness-50 w-full">
                 {item.video ? (
                   <video
