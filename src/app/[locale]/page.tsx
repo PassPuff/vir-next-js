@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { fetchAPI } from "@/lib/fetch-api";
+import { fetchAPI } from "@/lib/api/fetch-api";
 import { blockRenderer } from "@/lib/block-renderer";
 
-import type { Data } from "@/types/main-page";
+// import type { Data } from "@/types/main-page";
 import type { Block } from "@/types/blocks";
 
 export const dynamicParams = false;
@@ -24,7 +24,7 @@ async function fetchMainPageData(locale: string) {
 
 export default async function MainPage({ params }: Props) {
   const { locale } = await params;
-  const data: Data = await fetchMainPageData(locale);
+  const data = await fetchMainPageData(locale);
   if (!data) notFound();
 
   const blocks = data.blocks;

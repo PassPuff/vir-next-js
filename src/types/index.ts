@@ -1,4 +1,4 @@
-import type { LinkProps, ImageProps } from "./base";
+import type { LinkProps, ImageProps, Locales } from "./base";
 import type {
   SectionHeroBannerProps,
   SectionChoiceProps,
@@ -7,8 +7,10 @@ import type {
   SectionBenefitsProps,
   Block,
 } from "./blocks";
+import type { CategoryProps } from "./categories";
 
 export type {
+  Locales,
   LinkProps,
   ImageProps,
   SectionHeroBannerProps,
@@ -17,4 +19,5 @@ export type {
   SectionPurchaseProcedureProps,
   SectionBenefitsProps,
   Block,
+  CategoryProps,
 };

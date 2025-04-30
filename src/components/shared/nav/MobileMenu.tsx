@@ -17,70 +17,73 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import NavLink from "@/components/shared/nav/NavLink";
+import { CategoryProps } from "@/types";
 
 interface MobileMenuProps {
-  catalogLinks: { label: string; href: string }[];
-  topLinks: { label: string; href: string }[];
+  categories: CategoryProps[];
+  topLinks: { label: string; slug: string }[];
 }
 
-export default function MobileMenu({
-  catalogLinks,
-  topLinks,
-}: MobileMenuProps) {
+export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
   return (
-    <Drawer direction="top">
-      <DrawerTrigger aria-label="Open main menu">
-        <DrawerTitle className="sr-only">Main menu</DrawerTitle>
-        <MenuIcon />
-      </DrawerTrigger>
+    <div className="md:hidden">
+      <Drawer direction="top">
+        <DrawerTrigger aria-label="Open main menu">
+          <DrawerTitle className="sr-only">Main menu</DrawerTitle>
+          <MenuIcon />
+        </DrawerTrigger>
 
-      <DrawerContent aria-describedby={undefined}>
-        <DrawerHeader className="flex-row justify-between items-end">
-          <Image
-            src="/logo.svg"
-            alt="Virmer Logo"
-            className="max-w-[50px]"
-            width={50}
-            height={50}
-          />
-          <DrawerClose asChild>
-            <X size={32} />
-          </DrawerClose>
-        </DrawerHeader>
+        <DrawerContent aria-describedby={undefined}>
+          <DrawerHeader className="flex-row justify-between items-end">
+            <Image
+              src="/logo.svg"
+              alt="Virmer Logo"
+              className="max-w-[50px]"
+              width={50}
+              height={50}
+            />
+            <DrawerClose asChild>
+              <X size={32} />
+            </DrawerClose>
+          </DrawerHeader>
 
-        <NavigationMenu
-          orientation="vertical"
-          className="justify-start items-start overflow-y-auto min-w-full"
-        >
-          <NavigationMenuList className="flex-col items-start px-5 gap-1">
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <NavLink className="font-bold" href="#">
-                  Equipment catalog
-                </NavLink>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            {catalogLinks.map((link) => (
-              <NavigationMenuItem key={link.label} className="list-disc ml-6">
+          <NavigationMenu
+            orientation="vertical"
+            className="justify-start items-start overflow-y-auto min-w-full"
+          >
+            <NavigationMenuList className="flex-col items-start px-5 gap-1">
+              <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <NavLink href={link.href}>{link.label}</NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-
-            {topLinks.map((link) => (
-              <NavigationMenuItem key={link.label}>
-                <NavigationMenuLink asChild>
-                  <NavLink className="p-1" href={link.href}>
-                    {link.label}
+                  <NavLink className="font-bold" href="#">
+                    Equipment catalog
                   </NavLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-      </DrawerContent>
-    </Drawer>
+
+              {categories.map((link) => (
+                <NavigationMenuItem
+                  key={link.documentId}
+                  className="list-disc ml-6"
+                >
+                  <NavigationMenuLink asChild>
+                    <NavLink href={link.slug}>{link.name}</NavLink>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+
+              {topLinks.map((link) => (
+                <NavigationMenuItem key={link.label}>
+                  <NavigationMenuLink asChild>
+                    <NavLink className="p-1" href={link.slug}>
+                      {link.label}
+                    </NavLink>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }

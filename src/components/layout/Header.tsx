@@ -1,6 +1,6 @@
 "use client";
 
-import NavLink from "next/link";
+import NavLink from "@/components/shared/nav/NavLink";
 import Image from "next/image";
 import {
   NavigationMenu,
@@ -14,37 +14,43 @@ import { ShoppingCart } from "lucide-react";
 import Container from "@/components/shared/Container";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import MobileMenu from "@/components/shared/nav/MobileMenu";
+import { CategoryProps } from "@/types";
+import { cn } from "@/lib/utils";
 
 type NavLink = {
   label: string;
-  href: string;
+  slug: string;
 };
 
-const catalogLinks: NavLink[] = [
-  { label: "Laser CO2", href: "#" },
-  { label: "Markers", href: "#" },
-  { label: "Metal cutting", href: "#" },
-  { label: "CNC Router", href: "#" },
-  { label: "Welding", href: "#" },
-  { label: "Cleaning", href: "#" },
-  { label: "Press Brakes", href: "#" },
-  { label: "Tube Cutters", href: "#" },
-];
-
 const topLinks: NavLink[] = [
-  { label: "Payment and delivery", href: "#" },
-  { label: "About us", href: "#" },
-  { label: "Contacts", href: "#" },
-  { label: "Blog", href: "#" },
-  { label: "Service", href: "#" },
+  { label: "Payment and delivery", slug: "#" },
+  { label: "About us", slug: "#" },
+  { label: "Contacts", slug: "#" },
+  { label: "Blog", slug: "#" },
+  { label: "Service", slug: "#" },
 ];
 
-export default function Navbar() {
+interface HeaderProps {
+  categories: CategoryProps[];
+}
+
+export default function Header({ categories }: HeaderProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const { scrollDirection, scrollY } = useScrollDirection(5);
 
   return (
-    <header className="w-full shadow-md">
+    <header
+      className={cn(
+        "w-full shadow-md fixed z-40 transition-transform duration-300",
+        scrollY < 80
+          ? "translate-y-0" // показать на первом экране
+          : scrollDirection === "down"
+            ? "-translate-y-full"
+            : "translate-y-0",
+      )}
+    >
       {/*Верхний ряд */}
       <div className="bg-black text-white  py-2 text-sm">
         <Container className="flex items-center justify-between">
@@ -57,7 +63,7 @@ export default function Navbar() {
                 {topLinks.map((link) => (
                   <NavigationMenuItem key={link.label}>
                     <NavigationMenuLink asChild>
-                      <NavLink href={link.href}>{link.label}</NavLink>
+                      <NavLink href={`/${link.slug}`}>{link.label}</NavLink>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -98,20 +104,24 @@ export default function Navbar() {
           <div className="hidden md:block">
             <NavigationMenu viewport={false}>
               <NavigationMenuList className="gap-6">
-                {catalogLinks.slice(0, 5).map((link) => (
-                  <NavigationMenuItem key={link.label}>
+                {categories.slice(0, 5).map((link) => (
+                  <NavigationMenuItem key={link.documentId}>
                     <NavigationMenuLink asChild>
-                      <NavLink href={link.href}>{link.label}</NavLink>
+                      <NavLink href={`/catalog/${link.slug}`}>
+                        {link.name}
+                      </NavLink>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>More</NavigationMenuTrigger>
-                  <NavigationMenuContent className="z-1 min-w-max">
-                    {catalogLinks.slice(5).map((link) => (
-                      <NavigationMenuLink key={link.label} asChild>
-                        <NavLink href={link.href}>{link.label}</NavLink>
+                  <NavigationMenuContent className="z-1 min-w-max -left-10">
+                    {categories.slice(5).map((link) => (
+                      <NavigationMenuLink key={link.documentId} asChild>
+                        <NavLink href={`/catalog/${link.slug}`}>
+                          {link.name}
+                        </NavLink>
                       </NavigationMenuLink>
                     ))}
                   </NavigationMenuContent>
@@ -122,7 +132,7 @@ export default function Navbar() {
 
           {/*Мобайл бургер */}
           {!isDesktop && (
-            <MobileMenu catalogLinks={catalogLinks} topLinks={topLinks} />
+            <MobileMenu categories={categories} topLinks={topLinks} />
           )}
         </Container>
       </div>

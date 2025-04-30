@@ -1,11 +1,10 @@
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { routing } from "@/i18n/routing";
 import Header from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
-import { getMessages } from "next-intl/server";
-import { fetchAPI } from "@/lib/fetch-api";
-import type { Locales } from "@/types/base";
+import { fetchAPI } from "@/lib/api/fetch-api";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,30 +28,27 @@ export const dynamicParams = false;
 
 const myFont = localFont({ src: "../../fonts/Pangram-Light.woff2" });
 
-export async function generateStaticParams(): Promise<{ locale: string }[]> {
-  const data: Locales[] = await fetchAPI(`/api/i18n/locales`, {
-    method: "GET",
-    next: { revalidate: 60 },
-  });
-
-  if (!data) notFound();
-
-  return data.map((locale) => ({
-    locale: locale.code,
-  }));
-}
-
 export default async function MainLayout({ params, children }: Props) {
   const { locale } = await params;
 
-  const messages = await getMessages();
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  const { data: categories } = await fetchAPI(
+    `/api/categories?locale=${locale}`,
+    {
+      method: "GET",
+      next: { revalidate: 60 },
+    },
+  );
 
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider>
           <div>
-            <Header />
+            <Header categories={categories} />
             <main className={cn(myFont.className, "antialiased")}>
               {children}
             </main>

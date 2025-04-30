@@ -1,4 +1,4 @@
-import { authToken, BASE_URL } from "../config";
+import { authToken, BASE_URL } from "../../config";
 
 type NextFetchRequestConfig = {
   revalidate?: number | false;
