@@ -8,6 +8,7 @@ import type {
   Block,
 } from "./blocks";
 import type { CategoryProps } from "./categories";
+import type { ProductsProps } from "./products";
 
 export type {
   Locales,
@@ -20,4 +21,5 @@ export type {
   SectionBenefitsProps,
   Block,
   CategoryProps,
+  ProductsProps,
 };

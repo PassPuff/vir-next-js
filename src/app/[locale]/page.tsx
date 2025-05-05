@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { fetchAPI } from "@/lib/api/fetch-api";
 import { blockRenderer } from "@/lib/block-renderer";
-
-// import type { Data } from "@/types/main-page";
+import EquipmentList from "@/components/shared/blocks/EquipmentList";
 import type { Block } from "@/types/blocks";
 
 export const dynamicParams = false;
@@ -31,10 +30,10 @@ export default async function MainPage({ params }: Props) {
 
   return (
     <>
-      {/*<HeroBanner homeBanner={data.heroBanner} />*/}
       {blocks.map((block: Block, index: number) => {
         return blockRenderer(block, index);
       })}
+      <EquipmentList locale={locale} />
     </>
   );
 }

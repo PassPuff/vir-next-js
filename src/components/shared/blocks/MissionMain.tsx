@@ -30,7 +30,7 @@ export default function MissionMain({
 
       <div className="grid grid-cols-12  grid-rows-subgrid gap-7">
         <Image
-          className="col-span-5 row-1 object-cover -mb-90 z-10 w-max"
+          className="col-span-5 row-1 object-cover -mb-90 z-10 w-full"
           src={image?.url || "/icon-512.png"}
           alt={image?.alternativeText + " test"}
           width={700}

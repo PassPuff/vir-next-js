@@ -49,7 +49,7 @@ export default async function MainLayout({ params, children }: Props) {
         <NextIntlClientProvider>
           <div>
             <Header categories={categories} />
-            <main className={cn(myFont.className, "antialiased")}>
+            <main className={cn(myFont.className, "antialiased, pt-[12.5dvh]")}>
               {children}
             </main>
           </div>
