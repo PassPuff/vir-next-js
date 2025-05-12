@@ -8,12 +8,8 @@ const nextConfig: NextConfig = {
   //   },
   // },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-    ],
+    remotePatterns: [new URL("https://res.cloudinary.com/**")],
+    formats: ["image/webp"],
   },
 };
 

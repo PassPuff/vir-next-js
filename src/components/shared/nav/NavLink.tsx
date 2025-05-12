@@ -21,7 +21,7 @@ export default function NavLink({ href, children, className }: NavLinkProps) {
       className={clsx(
         isActive
           ? "text-yellow-500"
-          : "hover:text-yellow-500 transition duration-300 ease-in-out focus:text-yellow-500",
+          : "hover:text-yellow-500  focus:text-yellow-500 transition duration-300 ease-in-out",
         className,
       )}
     >

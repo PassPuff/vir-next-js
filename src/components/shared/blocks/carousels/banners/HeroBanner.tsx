@@ -34,6 +34,7 @@ export default async function HeroBanner({ slides }: SectionHeroBannerProps) {
                     src={item.image.url}
                     alt={item.image.alternativeText + " "}
                     width={1920}
+                    fill={true}
                     height={720}
                   />
                 )}

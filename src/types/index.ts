@@ -1,4 +1,7 @@
 import type { LinkProps, ImageProps, Locales } from "./base";
+import type { HomePageProps } from "./home-page";
+import type { CategoryProps } from "./categories";
+import type { ProductsProps } from "./products";
 import type {
   SectionHeroBannerProps,
   SectionChoiceProps,
@@ -7,8 +10,6 @@ import type {
   SectionBenefitsProps,
   Block,
 } from "./blocks";
-import type { CategoryProps } from "./categories";
-import type { ProductsProps } from "./products";
 
 export type {
   Locales,
@@ -19,6 +20,7 @@ export type {
   SectionMissionProps,
   SectionPurchaseProcedureProps,
   SectionBenefitsProps,
+  HomePageProps,
   Block,
   CategoryProps,
   ProductsProps,

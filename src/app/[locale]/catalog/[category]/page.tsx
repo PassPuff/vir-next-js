@@ -1,45 +1,38 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import Container from "@/components/shared/Container";
-import { fetchAPI } from "@/lib/api/fetch-api";
-import { notFound } from "next/navigation";
-import qs from "qs";
 import { ProductsProps } from "@/types";
+import fetchApi from "@/lib/api/strapi";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
 };
 
-const createQueryProduct = (locale: string, category: string) =>
-  qs.stringify({
-    filters: {
-      category: {
-        slug: {
-          $eq: category,
-        },
-      },
-    },
-    locale: locale,
-  });
-
 export default async function CategoryPage({ params }: Props) {
   const { category, locale } = await params;
 
-  const query = createQueryProduct(locale, category);
-  const data = await fetchAPI(`/api/products?${query}`, {
-    method: "GET",
-    next: { revalidate: 60 },
+  const products = await fetchApi<ProductsProps[]>({
+    endpoint: "products",
+    query: {
+      // фильтрация по slug категории
+      "filters[category][slug][$eq]": category,
+    },
+    locale,
+    wrappedByKey: "data",
+    next: {
+      revalidate: 60,
+      cache: "force-cache",
+    },
   });
 
-  if (!data) notFound();
-
-  const products: ProductsProps[] = data?.data || [];
+  if (!products) notFound();
 
   return (
     <section>
       <Container>
         <header className="pb-10 max-w-lg">
-          <h1 className="text-4xl font-bold py-3">
+          <h1 className="text-4xl font-bold py-10">
             List products{" "}
             <span className="text-yellow-500">
               {products[0]?.category?.name}
@@ -55,7 +48,7 @@ export default async function CategoryPage({ params }: Props) {
                 className="block h-full p-4 bg-gray-100 rounded-2xl transition duration-300 ease-in-out
                 hover:bg-gray-200
                 focus:bg-gray-200"
-                href={`/src/app/%5Blocale%5D/catalog/${category}/${product.slug}`}
+                href={`/catalog/${category}/${product.slug}`}
               >
                 <h2 className="text-xl font-bold pb-3">{product.name}</h2>
                 <Image
@@ -65,13 +58,13 @@ export default async function CategoryPage({ params }: Props) {
                   height={500}
                 ></Image>
                 <div>
-                  {product?.order_price && (
+                  {!!product?.order_price && (
                     <p>Order Price: {product.order_price} &euro;</p>
                   )}
-                  {product?.stock_price && (
+                  {!!product?.stock_price && (
                     <p>Stock Price: {product.stock_price} &euro;</p>
                   )}
-                  {product?.new_price && (
+                  {!!product?.new_price && (
                     <p>New Price: {product.new_price} &euro;</p>
                   )}
                 </div>

@@ -5,5 +5,8 @@
   },
   "CatalogPage": {
     "title": "Catalogue"
+  },
+  "Header": {
+    "more": "Di più"
   }
 }

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ShoppingCart } from "lucide-react";
 import Container from "@/components/shared/Container";
-
+import { useTranslations } from "next-intl";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import MobileMenu from "@/components/shared/nav/MobileMenu";
@@ -39,6 +39,7 @@ interface HeaderProps {
 export default function Header({ categories }: HeaderProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const { scrollDirection, scrollY } = useScrollDirection(5);
+  const t = useTranslations("Header");
 
   return (
     <header
@@ -115,7 +116,7 @@ export default function Header({ categories }: HeaderProps) {
                 ))}
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>More</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>{t("more")}</NavigationMenuTrigger>
                   <NavigationMenuContent className="z-1 min-w-max -left-10">
                     {categories.slice(5).map((link) => (
                       <NavigationMenuLink key={link.documentId} asChild>

@@ -1,24 +1,23 @@
 import Container from "@/components/shared/Container";
-import { fetchAPI } from "@/lib/api/fetch-api";
 import { notFound } from "next/navigation";
 import { CategoryProps } from "@/types";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import fetchApi from "@/lib/api/strapi";
 
-const fetchCategoryData = async (locale: string) => {
-  const data = await fetchAPI(`/api/categories?locale=${locale}`, {
-    method: "GET",
-    next: { revalidate: 60 },
+export default async function EquipmentList({ locale }: { locale: string }) {
+  const data = await fetchApi<CategoryProps[]>({
+    endpoint: "categories",
+    locale,
+    wrappedByKey: "data",
+    next: {
+      revalidate: 60,
+      cache: "force-cache",
+    },
   });
 
   if (!data) notFound();
-
-  return data?.data || null;
-};
-
-export default async function EquipmentList({ locale }: { locale: string }) {
-  const data: CategoryProps[] = await fetchCategoryData(locale);
 
   return (
     <section className="py-20">

@@ -4,14 +4,20 @@ interface Props {
   query?: Record<string, string>;
   wrappedByKey?: string;
   wrappedByList?: boolean;
+  next?: {
+    revalidate?: number | false;
+    tags?: string[];
+    cache?: "force-cache" | "no-store" | "default";
+  };
 }
 
 export default async function fetchApi<T>({
   endpoint,
-  query,
   locale,
+  query,
   wrappedByKey,
   wrappedByList,
+  next,
 }: Props): Promise<T> {
   if (endpoint.startsWith("/")) {
     endpoint = endpoint.slice(1);
@@ -36,6 +42,7 @@ export default async function fetchApi<T>({
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_READ_TOKEN}`,
     },
+    next,
   });
 
   if (!res.ok) throw new Error("Failed to fetch data");

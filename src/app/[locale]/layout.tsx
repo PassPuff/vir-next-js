@@ -4,8 +4,10 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
-import { fetchAPI } from "@/lib/api/fetch-api";
 import type { Metadata } from "next";
+import fetchApi from "@/lib/api/strapi";
+import { CategoryProps } from "@/types";
+import PopUpForms from "@/components/shared/forms/PopUpForms";
 
 export const metadata: Metadata = {
   title:
@@ -21,12 +23,33 @@ export const metadata: Metadata = {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string; category: string }>;
 };
 
-export const dynamicParams = false;
-
 const myFont = localFont({ src: "../../fonts/Pangram-Light.woff2" });
+
+export async function generateStaticParams(): Promise<
+  { locale: string; category: string }[]
+> {
+  const locales = routing.locales;
+
+  const params = await Promise.all(
+    locales.map(async (locale) => {
+      const categories = await fetchApi<CategoryProps[]>({
+        endpoint: "categories",
+        locale,
+        wrappedByKey: "data",
+      });
+
+      return categories.map((category) => ({
+        locale,
+        category: category.slug,
+      }));
+    }),
+  );
+
+  return params.flat();
+}
 
 export default async function MainLayout({ params, children }: Props) {
   const { locale } = await params;
@@ -35,21 +58,26 @@ export default async function MainLayout({ params, children }: Props) {
     notFound();
   }
 
-  const { data: categories } = await fetchAPI(
-    `/api/categories?locale=${locale}`,
-    {
-      method: "GET",
-      next: { revalidate: 60 },
+  const data = await fetchApi<CategoryProps[]>({
+    endpoint: "categories",
+    locale,
+    wrappedByKey: "data",
+    next: {
+      revalidate: 60,
+      cache: "force-cache",
     },
-  );
+  });
+
+  if (!data) notFound();
 
   return (
     <html lang={locale}>
       <body>
         <NextIntlClientProvider>
           <div>
-            <Header categories={categories} />
+            <Header categories={data} />
             <main className={cn(myFont.className, "antialiased, pt-[12.5dvh]")}>
+              <PopUpForms />
               {children}
             </main>
           </div>

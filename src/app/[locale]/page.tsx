@@ -1,36 +1,38 @@
 import { notFound } from "next/navigation";
-import { fetchAPI } from "@/lib/api/fetch-api";
 import { blockRenderer } from "@/lib/block-renderer";
 import EquipmentList from "@/components/shared/blocks/EquipmentList";
-import type { Block } from "@/types/blocks";
-
-export const dynamicParams = false;
+import type { HomePageProps } from "@/types";
+import fetchApi from "@/lib/api/strapi";
+import PopUpForms from "@/components/shared/forms/PopUpForms";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
 async function fetchMainPageData(locale: string) {
-  const data = await fetchAPI(`/api/home-page?locale=${locale}`, {
-    method: "GET",
-    next: { revalidate: 60 },
+  const data = await fetchApi<HomePageProps>({
+    endpoint: "home-page",
+    locale,
+    wrappedByKey: "data",
+    next: {
+      revalidate: 60,
+      cache: "force-cache",
+    },
   });
 
   if (!data) notFound();
 
-  return data?.data || null;
+  return data;
 }
 
 export default async function MainPage({ params }: Props) {
   const { locale } = await params;
-  const data = await fetchMainPageData(locale);
+  const data: HomePageProps = await fetchMainPageData(locale);
   if (!data) notFound();
-
-  const blocks = data.blocks;
 
   return (
     <>
-      {blocks.map((block: Block, index: number) => {
+      {data?.blocks?.map((block, index: number) => {
         return blockRenderer(block, index);
       })}
       <EquipmentList locale={locale} />

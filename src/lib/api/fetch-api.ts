@@ -3,6 +3,7 @@ import { authToken, BASE_URL } from "../../config";
 type NextFetchRequestConfig = {
   revalidate?: number | false;
   tags?: string[];
+  cache?: "force-cache" | "no-store" | "default";
 };
 
 interface FetchAPIOptions {
