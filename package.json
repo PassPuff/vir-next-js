@@ -19,7 +19,6 @@
     "@strapi/blocks-react-renderer": "^1.0.2",
     "@types/negotiator": "^0.6.3",
     "@types/qs": "^6.9.17",
-    "@zod/mini": "^4.0.0-beta.20250505T195954",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",

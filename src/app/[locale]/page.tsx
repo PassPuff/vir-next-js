@@ -3,7 +3,6 @@ import { blockRenderer } from "@/lib/block-renderer";
 import EquipmentList from "@/components/shared/blocks/EquipmentList";
 import type { HomePageProps } from "@/types";
 import fetchApi from "@/lib/api/strapi";
-import PopUpForms from "@/components/shared/forms/PopUpForms";
 
 type Props = {
   params: Promise<{ locale: string }>;
