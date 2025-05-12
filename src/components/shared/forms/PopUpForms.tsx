@@ -1,5 +1,11 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { cn } from "@/lib/utils";
+import * as z from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,20 +14,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { cn } from "@/lib/utils";
-import * as z from "zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  // FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+type PopUpFormsProps = {
+  btnTitle: string;
+  btnClassName?: string;
+};
 
 export default function PopUpForms({
   btnTitle,
   btnClassName,
-}: {
-  btnTitle: string;
-  btnClassName?: string;
-}) {
+}: PopUpFormsProps) {
   // Define the schema using Zod
   const FormSchema = z.object({
     name: z
@@ -34,11 +45,7 @@ export default function PopUpForms({
   type FormSchema = z.infer<typeof FormSchema>;
 
   // Initialize the form with react-hook-form
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormSchema>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
@@ -64,27 +71,54 @@ export default function PopUpForms({
             Leave your details to be contacted by one of our specialists
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input
-            {...register("name")}
-            placeholder="Your name"
-            className="border p-2 rounded"
-          />
-          <p>{errors.name?.message}</p>
-          <Input
-            {...register("email")}
-            placeholder="Your email"
-            className="border p-2 rounded"
-          />
-          <p>{errors.email?.message}</p>
-          <Input
-            {...register("phone")}
-            placeholder="Your phone"
-            className="border p-2 rounded"
-          />
-          <p>{errors.phone?.message}</p>
-          <Button type="submit">Submit</Button>
-        </form>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your Phone" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
