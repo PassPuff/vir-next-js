@@ -77,7 +77,13 @@ export default async function MainLayout({ params, children }: Props) {
           <div>
             <Header categories={data} />
             <main className={cn(myFont.className, "antialiased, pt-[12.5dvh]")}>
-              <PopUpForms />
+              <PopUpForms
+                btnTitle="Make a request"
+                btnClassName={cn(
+                  "fixed right-0 z-20 bg-[var(--yellow)] p-3 -rotate-90 origin-bottom-right font-bold text-2xl cursor-pointer shadow-2xl",
+                  "hover:transform hover:scale-110 transition-transform duration-300 ease-in-out",
+                )}
+              />
               {children}
             </main>
           </div>
