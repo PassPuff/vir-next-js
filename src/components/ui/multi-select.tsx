@@ -73,7 +73,7 @@ const MultiSelector = ({
         onValueChange([...value, val]);
       }
     },
-    [value],
+    [value, onValueChange],
   );
 
   const handleSelect = React.useCallback(
@@ -174,7 +174,17 @@ const MultiSelector = ({
           break;
       }
     },
-    [value, inputValue, activeIndex, loop],
+    [
+      value,
+      inputValue,
+      activeIndex,
+      loop,
+      dir,
+      isValueSelected,
+      onValueChangeHandler,
+      open,
+      selectedValue,
+    ],
   );
 
   return (
@@ -262,7 +272,7 @@ MultiSelectorTrigger.displayName = "MultiSelectorTrigger";
 const MultiSelectorInput = forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => {
+>(({ className, ...props }, forwardedRef) => {
   const {
     setOpen,
     inputValue,
@@ -273,11 +283,26 @@ const MultiSelectorInput = forwardRef<
     ref: inputRef,
   } = useMultiSelect();
 
+  // Используем callback ref для объединения двух рефов
+  const refCallback = useCallback(
+    (element: HTMLInputElement | null) => {
+      if (typeof forwardedRef === "function") {
+        forwardedRef(element);
+      } else if (forwardedRef) {
+        forwardedRef.current = element;
+      }
+      if (inputRef) {
+        inputRef.current = element;
+      }
+    },
+    [forwardedRef, inputRef],
+  );
+
   return (
     <CommandPrimitive.Input
       {...props}
       tabIndex={0}
-      ref={inputRef}
+      ref={refCallback}
       value={inputValue}
       onValueChange={activeIndex === -1 ? setInputValue : undefined}
       onSelect={handleSelect}
