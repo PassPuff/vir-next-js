@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PhoneInput } from "@/components/shared/phone-input";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -90,11 +90,8 @@ export default function BasicForm() {
               <FormControl>
                 <PhoneInput
                   international
-                  // value={field.value}
-                  defaultCountry="IT"
+                  defaultCountry="NL"
                   placeholder="Enter Phone Number..."
-                  // onChange={field.onChange}
-                  className=""
                   {...field}
                 />
               </FormControl>
