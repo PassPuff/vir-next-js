@@ -23,6 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { PhoneInput } from "@/components/shared/phone-input";
 
 type PopUpFormsProps = {
   btnTitle: string;
@@ -63,7 +64,9 @@ export default function PopUpForms({
 
   return (
     <Dialog>
-      <DialogTrigger className={cn("", btnClassName)}>{btnTitle}</DialogTrigger>
+      <DialogTrigger asChild>
+        <button className={cn("", btnClassName)}>{btnTitle}</button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Get a Quote</DialogTitle>
@@ -71,6 +74,7 @@ export default function PopUpForms({
             Leave your details to be contacted by one of our specialists
           </DialogDescription>
         </DialogHeader>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -81,7 +85,9 @@ export default function PopUpForms({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>
+                    Username<span className="text-[#e22c2c]">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Your name" {...field} />
                   </FormControl>
@@ -95,7 +101,9 @@ export default function PopUpForms({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>
+                    Email<span className="text-[#e22c2c]">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Your email" {...field} />
                   </FormControl>
@@ -107,15 +115,26 @@ export default function PopUpForms({
               control={form.control}
               name="phone"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Number</FormLabel>
+                <FormItem className="mb-4">
+                  <FormLabel className="gap-0.5 text-[14px] font-[500]">
+                    Mobile Number<span className="text-[#e22c2c]">*</span>
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Your Phone" {...field} />
+                    <PhoneInput
+                      international
+                      // value={field.value}
+                      defaultCountry="IT"
+                      placeholder="Enter Phone Number..."
+                      // onChange={field.onChange}
+                      className=""
+                      {...field}
+                    />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-sm font-normal text-red-600" />
                 </FormItem>
               )}
             />
+
             <Button type="submit">Submit</Button>
           </form>
         </Form>
