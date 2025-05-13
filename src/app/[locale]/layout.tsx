@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import fetchApi from "@/lib/api/strapi";
 import { CategoryProps } from "@/types";
 import DialogWrapperForm from "@/components/shared/forms/DialogWrapperForm";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title:
@@ -86,6 +87,7 @@ export default async function MainLayout({ params, children }: Props) {
               />
               {children}
             </main>
+            <Toaster />
           </div>
         </NextIntlClientProvider>
       </body>

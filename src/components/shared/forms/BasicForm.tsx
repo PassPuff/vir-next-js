@@ -1,6 +1,7 @@
 import {
   Form,
   FormControl,
+  // FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,34 +13,61 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/multi-select";
+import { toast } from "sonner";
 
 export default function BasicForm() {
   // Define the schema using Zod
-  const FormSchema = z.object({
+  const formSchema = z.object({
     name: z
       .string()
       .min(2, { message: "Username must be at least 2 characters." }),
     email: z.string().email({ message: "Invalid email address" }),
     phone: z.string().min(10, { message: "Phone number is required" }),
+    contacts: z.array(z.string()).min(1, {
+      message: "Please select at least one contact method.",
+    }),
   });
 
-  type FormSchema = z.infer<typeof FormSchema>;
-
-  // Initialize the form with react-hook-form
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
       phone: "",
+      contacts: ["Phone"],
     },
   });
 
-  // Handle form submission
-  function onSubmit(values: FormSchema) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      console.log(values);
+      toast(
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+        </pre>,
+      );
+      // const response = await fetch('/api/form-submit', {
+      //   method: 'POST',
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+      // const result = await response.json();
+      // console.log('Form submitted successfully:', result);
+      //
+    } catch (error) {
+      console.error("Form submission error", error);
+      toast.error("Failed to submit the form. Please try again.");
+    }
   }
 
   return (
@@ -83,7 +111,7 @@ export default function BasicForm() {
           control={form.control}
           name="phone"
           render={({ field }) => (
-            <FormItem className="mb-4">
+            <FormItem>
               <FormLabel className="gap-0.5 text-[14px] font-[500]">
                 Mobile Number<span className="text-[#e22c2c]">*</span>
               </FormLabel>
@@ -96,6 +124,47 @@ export default function BasicForm() {
                 />
               </FormControl>
               <FormMessage className="text-sm font-normal text-red-600" />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="contacts"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Your preferred means of contact
+                <span className="text-[#e22c2c]">*</span>
+              </FormLabel>
+              <FormControl>
+                <MultiSelector
+                  values={field.value}
+                  onValuesChange={field.onChange}
+                  loop
+                >
+                  <MultiSelectorTrigger>
+                    <MultiSelectorInput />
+                  </MultiSelectorTrigger>
+                  <MultiSelectorContent>
+                    <MultiSelectorList>
+                      <MultiSelectorItem value={"Phone"}>
+                        Phone
+                      </MultiSelectorItem>
+                      <MultiSelectorItem value={"Email"}>
+                        Email
+                      </MultiSelectorItem>
+                      <MultiSelectorItem value={"Viber"}>
+                        Viber
+                      </MultiSelectorItem>
+                      <MultiSelectorItem value={"Whatsapp"}>
+                        Whatsapp
+                      </MultiSelectorItem>
+                    </MultiSelectorList>
+                  </MultiSelectorContent>
+                </MultiSelector>
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
