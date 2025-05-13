@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import fetchApi from "@/lib/api/strapi";
 import { CategoryProps } from "@/types";
-import PopUpForms from "@/components/shared/forms/PopUpForms";
+import DialogWrapperForm from "@/components/shared/forms/DialogWrapperForm";
 
 export const metadata: Metadata = {
   title:
@@ -77,7 +77,7 @@ export default async function MainLayout({ params, children }: Props) {
           <div>
             <Header categories={data} />
             <main className={cn(myFont.className, "antialiased, pt-[12.5dvh]")}>
-              <PopUpForms
+              <DialogWrapperForm
                 btnTitle="Make a request"
                 btnClassName={cn(
                   "fixed right-0 z-20 bg-[var(--yellow)] p-3 -rotate-90 origin-bottom-right font-bold text-2xl cursor-pointer shadow-2xl",
