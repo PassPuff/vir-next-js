@@ -12,8 +12,9 @@ export default async function SectionEquipment({ locale }: { locale: string }) {
     locale,
     wrappedByKey: "data",
     next: {
-      revalidate: 60,
+      // revalidate: 7200,
       cache: "force-cache",
+      tags: ["categories"],
     },
   });
 

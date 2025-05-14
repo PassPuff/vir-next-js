@@ -14,8 +14,8 @@ async function fetchMainPageData(locale: string) {
     locale,
     wrappedByKey: "data",
     next: {
-      revalidate: 60,
       cache: "force-cache",
+      tags: ["home-page"],
     },
   });
 

@@ -39,6 +39,9 @@ export async function generateStaticParams(): Promise<
       const categories = await fetchApi<CategoryProps[]>({
         endpoint: "categories",
         locale,
+        next: {
+          cache: "force-cache",
+        },
         wrappedByKey: "data",
       });
 
@@ -64,7 +67,7 @@ export default async function MainLayout({ params, children }: Props) {
     locale,
     wrappedByKey: "data",
     next: {
-      revalidate: 60,
+      // revalidate: 60,
       cache: "force-cache",
     },
   });

@@ -21,8 +21,8 @@ export default async function CategoryPage({ params }: Props) {
     locale,
     wrappedByKey: "data",
     next: {
-      revalidate: 60,
       cache: "force-cache",
+      tags: ["products"],
     },
   });
 
