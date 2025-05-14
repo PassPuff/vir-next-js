@@ -46,24 +46,31 @@ export function FormBasic() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      );
-      // const response = await fetch('/api/form-submit', {
-      //   method: 'POST',
-      //   body: JSON.stringify(data),
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      // const result = await response.json();
-      // console.log('Form submitted successfully:', result);
-      //
+      const response = await fetch("http://localhost:1337/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: {
+            form_name: "Pop-up Contact Form",
+            name: values.name,
+            email: values.email,
+            phone: values.phone,
+            contacts: values.contacts.join(", "), // либо адаптируй Strapi под массив
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const result = await response.json();
+      console.log(result);
+      toast.success("Form submitted successfully!");
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");

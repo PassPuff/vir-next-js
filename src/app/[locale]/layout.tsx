@@ -29,9 +29,7 @@ type Props = {
 
 const myFont = localFont({ src: "../../fonts/Pangram-Light.woff2" });
 
-export async function generateStaticParams(): Promise<
-  { locale: string; category: string }[]
-> {
+export async function generateStaticParams() {
   const locales = routing.locales;
 
   const params = await Promise.all(
