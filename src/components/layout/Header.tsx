@@ -1,6 +1,6 @@
 "use client";
 
-import NavLink from "@/components/shared/nav/NavLink";
+import LinkNav from "@/components/ui/link-nav";
 import Image from "next/image";
 import {
   NavigationMenu,
@@ -15,16 +15,16 @@ import Container from "@/components/shared/Container";
 import { useTranslations } from "next-intl";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
-import MobileMenu from "@/components/shared/nav/MobileMenu";
+import MobileMenu from "@/components/shared/nav/mobile-menu";
 import { CategoryProps } from "@/types";
 import { cn } from "@/lib/utils";
 
-type NavLink = {
+type LinkNav = {
   label: string;
   slug: string;
 };
 
-const topLinks: NavLink[] = [
+const topLinks: LinkNav[] = [
   { label: "Payment and delivery", slug: "#" },
   { label: "About us", slug: "#" },
   { label: "Contacts", slug: "#" },
@@ -64,7 +64,7 @@ export default function Header({ categories }: HeaderProps) {
                 {topLinks.map((link) => (
                   <NavigationMenuItem key={link.label}>
                     <NavigationMenuLink asChild>
-                      <NavLink href={`/${link.slug}`}>{link.label}</NavLink>
+                      <LinkNav href={`/${link.slug}`}>{link.label}</LinkNav>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -91,7 +91,7 @@ export default function Header({ categories }: HeaderProps) {
       <div className="bg-white py-4">
         <Container className="flex items-center justify-between">
           {/*Логотип*/}
-          <NavLink href="/">
+          <LinkNav href="/">
             <Image
               src="/logo.svg"
               alt="Virmer Logo"
@@ -99,7 +99,7 @@ export default function Header({ categories }: HeaderProps) {
               width={50}
               height={50}
             />
-          </NavLink>
+          </LinkNav>
 
           {/* Десктоп каталог */}
           <div className="hidden md:block">
@@ -108,9 +108,9 @@ export default function Header({ categories }: HeaderProps) {
                 {categories.slice(0, 5).map((link) => (
                   <NavigationMenuItem key={link.documentId}>
                     <NavigationMenuLink asChild>
-                      <NavLink href={`/catalog/${link.slug}`}>
+                      <LinkNav href={`/catalog/${link.slug}`}>
                         {link.name}
-                      </NavLink>
+                      </LinkNav>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -120,9 +120,9 @@ export default function Header({ categories }: HeaderProps) {
                   <NavigationMenuContent className="z-1 min-w-max -left-10">
                     {categories.slice(5).map((link) => (
                       <NavigationMenuLink key={link.documentId} asChild>
-                        <NavLink href={`/catalog/${link.slug}`}>
+                        <LinkNav href={`/catalog/${link.slug}`}>
                           {link.name}
-                        </NavLink>
+                        </LinkNav>
                       </NavigationMenuLink>
                     ))}
                   </NavigationMenuContent>

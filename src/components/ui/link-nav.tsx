@@ -11,7 +11,7 @@ interface NavLinkProps {
   className?: string;
 }
 
-export default function NavLink({ href, children, className }: NavLinkProps) {
+export default function LinkNav({ href, children, className }: NavLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href;
 

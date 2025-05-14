@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { blockRenderer } from "@/lib/block-renderer";
-import EquipmentList from "@/components/shared/blocks/EquipmentList";
+import SectionEquipment from "@/components/shared/blocks/section-equipment";
 import type { HomePageProps } from "@/types";
 import fetchApi from "@/lib/api/strapi";
 
@@ -34,7 +34,7 @@ export default async function MainPage({ params }: Props) {
       {data?.blocks?.map((block, index: number) => {
         return blockRenderer(block, index);
       })}
-      <EquipmentList locale={locale} />
+      <SectionEquipment locale={locale} />
     </>
   );
 }

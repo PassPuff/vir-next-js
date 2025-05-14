@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -21,9 +22,8 @@ import {
   MultiSelectorList,
   MultiSelectorTrigger,
 } from "@/components/ui/multi-select";
-import { toast } from "sonner";
 
-export default function BasicForm() {
+export function FormBasic() {
   // Define the schema using Zod
   const formSchema = z.object({
     name: z

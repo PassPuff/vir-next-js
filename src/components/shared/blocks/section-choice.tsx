@@ -4,7 +4,11 @@ import Image from "next/image";
 import type { SectionChoiceProps } from "@/types/blocks";
 import { cn } from "@/lib/utils";
 
-export default function ChoiceMain({ title, text, image }: SectionChoiceProps) {
+export default function SectionChoice({
+  title,
+  text,
+  image,
+}: SectionChoiceProps) {
   return (
     <section className="py-20">
       <Container>

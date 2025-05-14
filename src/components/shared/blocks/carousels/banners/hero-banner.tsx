@@ -2,16 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/Container";
 import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { CarouselDots } from "@/components/shared/blocks/carousels/CarouselDots";
+import { CarouselDots } from "@/components/shared/blocks/carousels/carousel-dots";
 import { buttonVariants } from "@/components/ui/button";
-import WrapperCarousel from "@/components/shared/blocks/carousels/wrapperCarousel";
+import { CarouselWrapper } from "@/components/shared/blocks/carousels/carousel-wrapper";
 import { cn } from "@/lib/utils";
 import { SectionHeroBannerProps } from "@/types";
 
 export default async function HeroBanner({ slides }: SectionHeroBannerProps) {
   return (
     <section>
-      <WrapperCarousel autoplay={false} autoplayDelay={5000} fade={true}>
+      <CarouselWrapper autoplay={false} autoplayDelay={5000} fade={true}>
         <CarouselContent>
           {slides?.map((item) => (
             <CarouselItem key={item.id} className="relative  h-[88dvh]">
@@ -61,7 +61,7 @@ export default async function HeroBanner({ slides }: SectionHeroBannerProps) {
           ))}
         </CarouselContent>
         <CarouselDots className="absolute bottom-4 left-0 right-0" />
-      </WrapperCarousel>
+      </CarouselWrapper>
     </section>
   );
 }

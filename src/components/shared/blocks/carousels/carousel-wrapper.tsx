@@ -3,7 +3,7 @@ import { Carousel } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 
-export default function WrapperCarousel({
+export function CarouselWrapper({
   children,
   autoplay = false,
   autoplayDelay = 5000,

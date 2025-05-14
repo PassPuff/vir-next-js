@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import BasicForm from "@/components/shared/forms/BasicForm";
+import { FormBasic } from "@/components/shared/forms/form-basic";
 
 type PopUpFormsProps = {
   btnTitle: string;
@@ -34,7 +34,7 @@ export default function DialogWrapperForm({
         </DialogHeader>
 
         {/*Form component*/}
-        <BasicForm />
+        <FormBasic />
       </DialogContent>
     </Dialog>
   );

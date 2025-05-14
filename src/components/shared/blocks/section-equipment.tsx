@@ -6,7 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import fetchApi from "@/lib/api/strapi";
 
-export default async function EquipmentList({ locale }: { locale: string }) {
+export default async function SectionEquipment({ locale }: { locale: string }) {
   const data = await fetchApi<CategoryProps[]>({
     endpoint: "categories",
     locale,

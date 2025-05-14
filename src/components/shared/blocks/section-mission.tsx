@@ -4,7 +4,7 @@ import Image from "next/image";
 import type { SectionMissionProps } from "@/types/blocks";
 import { cn } from "@/lib/utils";
 
-export default function MissionMain({
+export default function SectionMission({
   subHeading,
   heading,
   image,

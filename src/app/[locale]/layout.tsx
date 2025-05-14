@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import fetchApi from "@/lib/api/strapi";
 import { CategoryProps } from "@/types";
-import DialogWrapperForm from "@/components/shared/forms/DialogWrapperForm";
+import DialogWrapperForm from "@/components/shared/forms/dialog-wrapper-form";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {

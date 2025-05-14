@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EquipmentList from "@/components/shared/blocks/EquipmentList";
+import SectionEquipment from "@/components/shared/blocks/section-equipment";
 import Container from "@/components/shared/Container";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default async function CatalogPage({ params }: Props) {
       <Container>
         <h1 className="text-6xl font-bold my-8">Equipment catalog</h1>
       </Container>
-      <EquipmentList locale={locale} />
+      <SectionEquipment locale={locale} />
     </>
   );
 }

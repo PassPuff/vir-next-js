@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { SectionBenefitsProps } from "@/types/blocks";
 import { cn } from "@/lib/utils";
 
-export default function BenefitsMain({
+export default function SectionBenefits({
   title,
   image,
   text,

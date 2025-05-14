@@ -2,7 +2,8 @@
 //
 // import { useEffect, useState } from "react";
 // import { usePathname, useRouter } from "next/navigation";
-// import type { Locales } from "@/types/locales";
+// // import type { Locales } from "@/types/locales";
+//
 //
 // export default function LanguageSwitcher() {
 //   const [locales, setLocales] = useState<Locales[]>([]);

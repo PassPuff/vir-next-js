@@ -16,7 +16,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import NavLink from "@/components/shared/nav/NavLink";
+import LinkNav from "@/components/ui/link-nav";
 import { CategoryProps } from "@/types";
 
 interface MobileMenuProps {
@@ -54,9 +54,9 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
             <NavigationMenuList className="flex-col items-start px-5 gap-1">
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <NavLink className="font-bold" href="#">
+                  <LinkNav className="font-bold" href="#">
                     Equipment catalog
-                  </NavLink>
+                  </LinkNav>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -66,7 +66,7 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
                   className="list-disc ml-6"
                 >
                   <NavigationMenuLink asChild>
-                    <NavLink href={link.slug}>{link.name}</NavLink>
+                    <LinkNav href={link.slug}>{link.name}</LinkNav>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -74,9 +74,9 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
               {topLinks.map((link) => (
                 <NavigationMenuItem key={link.label}>
                   <NavigationMenuLink asChild>
-                    <NavLink className="p-1" href={link.slug}>
+                    <LinkNav className="p-1" href={link.slug}>
                       {link.label}
-                    </NavLink>
+                    </LinkNav>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
