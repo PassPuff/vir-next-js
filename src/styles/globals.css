@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -126,19 +127,16 @@
   }
 }
 
-/* Базовые цвета */
+/* Base Colors */
 @theme {
-	--white: #ffffff;
-	--black: #000000;
-	--violet: #4F26E9;
-	--violet-dark: #4F26E91A;
-	--red: #b82c2c;
-	--pink: #CF26E9;
-	--green: #00A94C;
-	--gray: #96999b;
-	--gray-light: #f6f6f6;
-	--gray-text: #9298AF;
-	--yellow: #f7ce03;
+
+  --white: #ffffff;
+  --gray-light: #f6f6f6;
+  --black: #000000;
+  --red: #dd1b00;
+  --yellow: #f7ce03;
+  --gray: #96999b;
+  --gray-text: #808080;
 }
 
 
