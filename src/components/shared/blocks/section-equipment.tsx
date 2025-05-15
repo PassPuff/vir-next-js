@@ -37,16 +37,14 @@ export default async function SectionEquipment({ locale }: { locale: string }) {
                 <Link
                   href={`/catalog/${category.slug}`}
                   className={cn(
-                    "block h-full transform overflow-hidden bg-[var(--gray-light)] shadow-xl",
-                    "hover:transform-[-4px] hover:bg-[var(--yellow)] duration-300 ",
-                    "[&_img]:hover:scale-108 [&_img]:hover:grayscale-0 [&_img]:transition-all",
+                    "group block h-full overflow-hidden bg-[var(--gray-light)] shadow-xl transition duration-300 hover:-translate-y-1 hover:bg-[var(--yellow)]",
                   )}
                 >
                   <h3 className="mx-8 mt-8 text-2xl font-bold">
                     {category.name}
                   </h3>
                   <Image
-                    className="col-span-4 ml-auto mr-6 mb-2 grayscale"
+                    className="ml-auto mr-6 mb-2 grayscale transition-all duration-300 group-hover:scale-110 group-hover:grayscale-0"
                     src={category.image?.url || "/icon-512.png"}
                     alt={category.image?.alternativeText + " test"}
                     width={300}
