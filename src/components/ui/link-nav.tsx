@@ -1,31 +1,27 @@
 "use client";
 
-import { useSelectedLayoutSegment } from "next/navigation";
-import { ComponentProps } from "react";
 import { Link } from "@/i18n/navigation";
-import { clsx } from "clsx";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import { ComponentProps } from "react";
 
-export default function NavigationLink({
+export default function LinkNav({
   href,
   children,
-  // className,
-  ...rest
+  className,
 }: ComponentProps<typeof Link>) {
-  const selectedLayoutSegment = useSelectedLayoutSegment();
-  const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : "/";
+  const pathname = usePathname();
   const isActive = pathname === href;
 
   return (
     <Link
-      aria-current={isActive ? "page" : undefined}
       href={href}
       className={clsx(
         isActive
-          ? "text-yellow-500 "
-          : "hover:text-yellow-500   focus:text-yellow-500 transition duration-300 ease-in-out",
-        // className,
+          ? "text-yellow-500 hover:text-yellow-500 focus:text-yellow-500 "
+          : "hover:text-yellow-500  focus:text-yellow-500 transition duration-300 ease-in-out",
+        className,
       )}
-      {...rest}
     >
       {children}
     </Link>
