@@ -23,6 +23,7 @@ import {
 import PhoneInput from "react-phone-input-2";
 import "@/components/react-phone-input-2/style.css";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 export function FormBasic() {
   // Define the schema using Zod
@@ -37,15 +38,28 @@ export function FormBasic() {
     }),
   });
 
+  const savedFormData =
+    typeof window !== "undefined" ? sessionStorage.getItem("form-basic") : null;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-      contacts: ["Phone"],
-    },
+    defaultValues: savedFormData
+      ? JSON.parse(savedFormData)
+      : {
+          name: "",
+          email: "",
+          phone: "",
+          contacts: [],
+        },
   });
+  const { isDirty, isValid } = form.formState;
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      sessionStorage.setItem("form-basic", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -60,18 +74,16 @@ export function FormBasic() {
             name: values.name,
             email: values.email,
             phone: values.phone,
-            contacts: values.contacts.join(", "), // либо адаптируй Strapi под массив
+            contacts: values.contacts.join(", "),
           },
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
-      }
+      if (!response.ok) throw new Error("Failed to submit form");
 
-      const result = await response.json();
-      console.log(result);
       toast.success("Form submitted successfully!");
+      form.reset(); // сброс полей
+      sessionStorage.removeItem("form-basic"); // очистка сохранённого состояния
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
@@ -194,7 +206,9 @@ export function FormBasic() {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={!isDirty || !isValid}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
