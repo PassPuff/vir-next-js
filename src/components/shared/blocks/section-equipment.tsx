@@ -1,22 +1,12 @@
 import Container from "@/components/shared/Container";
 import { notFound } from "next/navigation";
-import { CategoryProps } from "@/types";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import fetchApi from "@/lib/api/strapi";
+import { getCategories } from "@/lib/api/get-data";
 
 export default async function SectionEquipment({ locale }: { locale: string }) {
-  const data = await fetchApi<CategoryProps[]>({
-    endpoint: "categories",
-    locale,
-    wrappedByKey: "data",
-    next: {
-      // revalidate: 7200,
-      cache: "force-cache",
-      tags: ["categories"],
-    },
-  });
+  const data = await getCategories(locale);
 
   if (!data) notFound();
 

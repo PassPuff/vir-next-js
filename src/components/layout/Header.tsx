@@ -39,6 +39,7 @@ interface HeaderProps {
 export default function Header({ categories }: HeaderProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const { scrollDirection, scrollY } = useScrollDirection(5);
+
   const t = useTranslations("Header");
 
   return (

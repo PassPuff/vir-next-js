@@ -2,8 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import Container from "@/components/shared/Container";
-import { ProductsProps } from "@/types";
-import fetchApi from "@/lib/api/strapi";
+import { getProductsByCategory } from "@/lib/api/get-data";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
@@ -12,19 +11,7 @@ type Props = {
 export default async function CategoryPage({ params }: Props) {
   const { category, locale } = await params;
 
-  const products = await fetchApi<ProductsProps[]>({
-    endpoint: "products",
-    query: {
-      // фильтрация по slug категории
-      "filters[category][slug][$eq]": category,
-    },
-    locale,
-    wrappedByKey: "data",
-    next: {
-      cache: "force-cache",
-      tags: ["products"],
-    },
-  });
+  const products = await getProductsByCategory(category, locale);
 
   if (!products) notFound();
 

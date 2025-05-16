@@ -1,32 +1,16 @@
 import { notFound } from "next/navigation";
 import { blockRenderer } from "@/lib/block-renderer";
 import SectionEquipment from "@/components/shared/blocks/section-equipment";
-import type { HomePageProps } from "@/types";
-import fetchApi from "@/lib/api/strapi";
+import { getHomePage } from "@/lib/api/get-data";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-async function fetchMainPageData(locale: string) {
-  const data = await fetchApi<HomePageProps>({
-    endpoint: "home-page",
-    locale,
-    wrappedByKey: "data",
-    next: {
-      cache: "force-cache",
-      tags: ["home-page"],
-    },
-  });
-
-  if (!data) notFound();
-
-  return data;
-}
-
 export default async function MainPage({ params }: Props) {
   const { locale } = await params;
-  const data: HomePageProps = await fetchMainPageData(locale);
+  const data = await getHomePage(locale);
+
   if (!data) notFound();
 
   return (

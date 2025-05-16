@@ -5,10 +5,9 @@ import { routing } from "@/i18n/routing";
 import Header from "@/components/layout/Header";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import fetchApi from "@/lib/api/strapi";
-import { CategoryProps } from "@/types";
 import DialogWrapperForm from "@/components/shared/forms/dialog-wrapper-form";
 import { Toaster } from "@/components/ui/sonner";
+import { getCategories } from "@/lib/api/get-data";
 
 export const metadata: Metadata = {
   title:
@@ -34,15 +33,7 @@ export async function generateStaticParams() {
 
   const params = await Promise.all(
     locales.map(async (locale) => {
-      const categories = await fetchApi<CategoryProps[]>({
-        endpoint: "categories",
-        locale,
-        next: {
-          cache: "force-cache",
-        },
-        wrappedByKey: "data",
-      });
-
+      const categories = await getCategories(locale);
       return categories.map((category) => ({
         locale,
         category: category.slug,
@@ -60,15 +51,7 @@ export default async function MainLayout({ params, children }: Props) {
     notFound();
   }
 
-  const data = await fetchApi<CategoryProps[]>({
-    endpoint: "categories",
-    locale,
-    wrappedByKey: "data",
-    next: {
-      // revalidate: 60,
-      cache: "force-cache",
-    },
-  });
+  const data = await getCategories(locale);
 
   if (!data) notFound();
 
