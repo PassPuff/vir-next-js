@@ -1,6 +1,5 @@
 import fetchApi from "./strapi";
-import { HomePageProps, ProductsProps } from "@/types";
-import { CategoryProps } from "@/types/categories";
+import { HomePageProps, ProductsProps, CategoryProps } from "@/types";
 
 // Получаем все категории
 export const getCategories = async (locale: string) => {
@@ -48,15 +47,15 @@ export const getProductsByCategory = async (
   });
 };
 
-// Получаем все продукты
-export const getAllProducts = async (locale: string) => {
+// поиск продуктов
+export const getSearchProducts = async (query: string) => {
   return await fetchApi<ProductsProps[]>({
     endpoint: "products",
-    locale,
-    wrappedByKey: "data",
-    next: {
-      cache: "force-cache",
-      tags: ["products"],
+    query: {
+      "filters[$or][0][name][$containsi]": query,
+      "filters[$or][1][description][$containsi]": query,
     },
+    locale: "en",
+    wrappedByKey: "data",
   });
 };

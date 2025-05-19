@@ -62,7 +62,7 @@ export default async function fetchApi<T>({
 
   const res = await fetch(url.toString(), {
     headers: {
-      Authorization: `Bearer ${process.env.STRAPI_READ_TOKEN}`,
+      // Authorization: `Bearer ${process.env.STRAPI_READ_TOKEN}`,
     },
     next,
   });

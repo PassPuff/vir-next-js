@@ -1,5 +1,3 @@
-"use client";
-
 import LinkNav from "@/components/ui/link-nav";
 import Image from "next/image";
 import {
@@ -12,12 +10,18 @@ import {
 } from "@/components/ui/navigation-menu";
 import { ShoppingCart } from "lucide-react";
 import Container from "@/components/shared/Container";
-import { useTranslations } from "next-intl";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { useScrollDirection } from "@/hooks/use-scroll-direction";
+// import { useTranslations } from "next-intl";
 import MobileMenu from "@/components/shared/nav/mobile-menu";
 import { CategoryProps } from "@/types";
-import { cn } from "@/lib/utils";
+import { Search } from "@/components/shared/nav/search";
+import HeaderWrapper from "@/components/shared/nav/header-wrapper";
+import { HeaderSearch } from "@/components/shared/nav/header-search";
+import { Suspense } from "react";
+import SearchResult from "@/components/shared/nav/search-result";
+
+// import { useMediaQuery } from "@/hooks/use-media-query";
+// import { useScrollDirection } from "@/hooks/use-scroll-direction";
+// import { cn } from "@/lib/utils";
 
 type LinkNav = {
   label: string;
@@ -34,25 +38,22 @@ const topLinks: LinkNav[] = [
 
 interface HeaderProps {
   categories: CategoryProps[];
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+  query?: string | undefined;
 }
 
-export default function Header({ categories }: HeaderProps) {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-  const { scrollDirection, scrollY } = useScrollDirection(5);
-
-  const t = useTranslations("Header");
+export default async function Header({
+  categories,
+  // searchParams,
+  query,
+}: HeaderProps) {
+  // const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <header
-      className={cn(
-        "w-full shadow-md fixed z-40 transition-transform duration-300",
-        scrollY < 80
-          ? "translate-y-0" // показать на первом экране
-          : scrollDirection === "down"
-            ? "-translate-y-full"
-            : "translate-y-0",
-      )}
-    >
+    <HeaderWrapper>
       {/*Верхний ряд */}
       <div className="bg-black text-white  py-2 text-sm">
         <Container className="flex items-center justify-between">
@@ -72,7 +73,16 @@ export default function Header({ categories }: HeaderProps) {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
+          <HeaderSearch />
+
           <div className="flex items-center gap-4">
+            {/*<Search placeholder="Search products..." />*/}
+
+            {/*<Suspense key={query} fallback={"Loading..."}>*/}
+            {/*  <SearchResult query={query} />*/}
+            {/*</Suspense>*/}
+
+            {/* Мобильная навигация */}
             {/* Телефон и почта */}
             <div className="hidden md:block text-xs text-right">
               <div>+31208082045</div>
@@ -117,7 +127,8 @@ export default function Header({ categories }: HeaderProps) {
                 ))}
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>{t("more")}</NavigationMenuTrigger>
+                  {/*<NavigationMenuTrigger>{t("more")}</NavigationMenuTrigger>*/}
+                  <NavigationMenuTrigger>more</NavigationMenuTrigger>
                   <NavigationMenuContent className="z-1 min-w-max -left-10">
                     {categories.slice(5).map((link) => (
                       <NavigationMenuLink key={link.documentId} asChild>
@@ -133,11 +144,11 @@ export default function Header({ categories }: HeaderProps) {
           </div>
 
           {/*Мобайл бургер */}
-          {!isDesktop && (
-            <MobileMenu categories={categories} topLinks={topLinks} />
-          )}
+          {/*{!isDesktop && (*/}
+          <MobileMenu categories={categories} topLinks={topLinks} />
+          {/*)}*/}
         </Container>
       </div>
-    </header>
+    </HeaderWrapper>
   );
 }

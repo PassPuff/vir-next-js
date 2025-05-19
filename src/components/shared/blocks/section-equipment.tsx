@@ -20,7 +20,7 @@ export default async function SectionEquipment({ locale }: { locale: string }) {
               <li
                 key={category.documentId}
                 className={cn(
-                  "col-span-4 rounded-md max-w-xl max-lg:col-span-6",
+                  "col-span-4 rounded-md __max-w-xl max-lg:col-span-6 aspect-square",
                   "",
                 )}
               >
@@ -34,7 +34,7 @@ export default async function SectionEquipment({ locale }: { locale: string }) {
                     {category.name}
                   </h3>
                   <Image
-                    className="ml-auto mr-6 mb-2 grayscale transition-all duration-300 group-hover:scale-110 group-hover:grayscale-0"
+                    className="w-auto ml-auto mr-6 mb-2 grayscale transition-all duration-300 group-hover:scale-110 group-hover:grayscale-0"
                     src={category.image?.url || "/icon-512.png"}
                     alt={category.image?.alternativeText + " test"}
                     width={300}
