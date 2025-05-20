@@ -49,7 +49,7 @@ export function FormBasic() {
           name: "",
           email: "",
           phone: "",
-          contacts: [],
+          contacts: ["phone"],
         },
   });
   const { isDirty, isValid } = form.formState;

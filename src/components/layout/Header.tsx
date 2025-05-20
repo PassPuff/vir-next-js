@@ -11,7 +11,7 @@ import {
 import { ShoppingCart } from "lucide-react";
 import Container from "@/components/shared/Container";
 // import { useTranslations } from "next-intl";
-import MobileMenu from "@/components/shared/nav/mobile-menu";
+import HeaderMobileMenu from "@/components/shared/nav/header-mobile-menu";
 import { CategoryProps } from "@/types";
 import HeaderWrapper from "@/components/shared/nav/header-wrapper";
 import { HeaderSearch } from "@/components/shared/nav/header-search";
@@ -138,7 +138,7 @@ export default async function Header({ categories }: HeaderProps) {
 
           {/*Мобайл бургер */}
           {/*{!isDesktop && (*/}
-          <MobileMenu categories={categories} topLinks={topLinks} />
+          <HeaderMobileMenu categories={categories} topLinks={topLinks} />
           {/*)}*/}
         </Container>
       </div>

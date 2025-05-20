@@ -1,5 +1,5 @@
 import type { Block } from "@/types";
-import HeroBanner from "@/components/shared/blocks/carousels/banners/hero-banner";
+import HeroBanner from "@/components/shared/blocks/banners/hero-banner";
 import SectionChoice from "@/components/shared/blocks/section-choice";
 import SectionMission from "@/components/shared/blocks/section-mission";
 import SectionBenefits from "@/components/shared/blocks/section-benefits";

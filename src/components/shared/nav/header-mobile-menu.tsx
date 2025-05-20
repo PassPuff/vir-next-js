@@ -16,7 +16,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import LinkNav from "@/components/ui/link-nav";
 import { CategoryProps } from "@/types";
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
@@ -26,7 +25,10 @@ interface MobileMenuProps {
   topLinks: { label: string; slug: string }[];
 }
 
-export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
+export default function HeaderMobileMenu({
+  categories,
+  topLinks,
+}: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

@@ -308,7 +308,9 @@ const MultiSelectorInput = forwardRef<
       onSelect={handleSelect}
       onBlur={() => setOpen(false)}
       onFocus={() => setOpen(true)}
-      onClick={() => setActiveIndex(-1)}
+      onClick={() => {
+        setActiveIndex(-1);
+      }}
       className={cn(
         "ml-2 bg-transparent outline-none placeholder:text-muted-foreground placeholder:text-sm flex-1",
         className,
