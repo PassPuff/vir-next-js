@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import "@/styles/globals.css";
 
-export const fetchCache = "default-cache";
+// export const fetchCache = "default-cache";
 
 type Props = {
   children: ReactNode;

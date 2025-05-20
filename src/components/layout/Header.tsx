@@ -13,11 +13,8 @@ import Container from "@/components/shared/Container";
 // import { useTranslations } from "next-intl";
 import MobileMenu from "@/components/shared/nav/mobile-menu";
 import { CategoryProps } from "@/types";
-import { Search } from "@/components/shared/nav/search";
 import HeaderWrapper from "@/components/shared/nav/header-wrapper";
 import { HeaderSearch } from "@/components/shared/nav/header-search";
-import { Suspense } from "react";
-import SearchResult from "@/components/shared/nav/search-result";
 
 // import { useMediaQuery } from "@/hooks/use-media-query";
 // import { useScrollDirection } from "@/hooks/use-scroll-direction";
@@ -34,6 +31,7 @@ const topLinks: LinkNav[] = [
   { label: "Contacts", slug: "#" },
   { label: "Blog", slug: "#" },
   { label: "Service", slug: "#" },
+  { label: "Special offer", slug: "#" },
 ];
 
 interface HeaderProps {
@@ -45,18 +43,14 @@ interface HeaderProps {
   query?: string | undefined;
 }
 
-export default async function Header({
-  categories,
-  // searchParams,
-  query,
-}: HeaderProps) {
+export default async function Header({ categories }: HeaderProps) {
   // const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
     <HeaderWrapper>
       {/*Верхний ряд */}
       <div className="bg-black text-white  py-2 text-sm">
-        <Container className="flex items-center justify-between">
+        <Container className="flex items-center justify-between gap-10">
           <div className="flex items-center gap-4">
             {/* Язык */}
             <div>🇬🇧</div>
@@ -66,7 +60,12 @@ export default async function Header({
                 {topLinks.map((link) => (
                   <NavigationMenuItem key={link.label}>
                     <NavigationMenuLink asChild>
-                      <LinkNav href={`/${link.slug}`}>{link.label}</LinkNav>
+                      <LinkNav
+                        className={"hover:bg-black focus:bg-black"}
+                        href={`/${link.slug}`}
+                      >
+                        {link.label}
+                      </LinkNav>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -76,12 +75,6 @@ export default async function Header({
           <HeaderSearch />
 
           <div className="flex items-center gap-4">
-            {/*<Search placeholder="Search products..." />*/}
-
-            {/*<Suspense key={query} fallback={"Loading..."}>*/}
-            {/*  <SearchResult query={query} />*/}
-            {/*</Suspense>*/}
-
             {/* Мобильная навигация */}
             {/* Телефон и почта */}
             <div className="hidden md:block text-xs text-right">

@@ -9,6 +9,7 @@ export default function LinkNav({
   href,
   children,
   className,
+  onClick,
 }: ComponentProps<typeof Link>) {
   const pathname = usePathname();
   const isActive = pathname === href;
@@ -21,6 +22,7 @@ export default function LinkNav({
           ? "text-yellow-500 hover:text-yellow-500 focus:text-yellow-500 "
           : "hover:text-yellow-500  focus:text-yellow-500 transition duration-300 ease-in-out",
         className,
+        onClick,
       )}
     >
       {children}

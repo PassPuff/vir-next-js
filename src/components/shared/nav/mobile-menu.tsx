@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import LinkNav from "@/components/ui/link-nav";
 import { CategoryProps } from "@/types";
+import { useState } from "react";
+import { Link } from "@/i18n/routing";
 
 interface MobileMenuProps {
   categories: CategoryProps[];
@@ -25,9 +27,11 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="md:hidden">
-      <Drawer direction="top">
+      <Drawer direction="top" open={isOpen} onOpenChange={setIsOpen}>
         <DrawerTrigger aria-label="Open main menu">
           <DrawerTitle className="sr-only">Main menu</DrawerTitle>
           <MenuIcon />
@@ -54,9 +58,13 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
             <NavigationMenuList className="flex-col items-start px-5 gap-1">
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <LinkNav className="font-bold" href="#">
+                  <Link
+                    className="font-bold"
+                    href="/catalog"
+                    onClick={() => setIsOpen(false)}
+                  >
                     Equipment catalog
-                  </LinkNav>
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -66,7 +74,12 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
                   className="list-disc ml-6"
                 >
                   <NavigationMenuLink asChild>
-                    <LinkNav href={link.slug}>{link.name}</LinkNav>
+                    <Link
+                      href={`/catalog/${link.slug}`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -74,9 +87,13 @@ export default function MobileMenu({ categories, topLinks }: MobileMenuProps) {
               {topLinks.map((link) => (
                 <NavigationMenuItem key={link.label}>
                   <NavigationMenuLink asChild>
-                    <LinkNav className="p-1" href={link.slug}>
+                    <Link
+                      className="p-1"
+                      href={`/${link.slug}`}
+                      onClick={() => setIsOpen(false)}
+                    >
                       {link.label}
-                    </LinkNav>
+                    </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
