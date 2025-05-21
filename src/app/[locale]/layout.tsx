@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import DialogWrapperForm from "@/components/shared/forms/dialog-wrapper-form";
 import { Toaster } from "@/components/ui/sonner";
 import { getCategories } from "@/lib/api/get-data";
+import FormFeedback from "@/components/shared/forms/form-feedback";
 
 export const metadata: Metadata = {
   title:
@@ -70,6 +71,7 @@ export default async function MainLayout({ params, children }: Props) {
                 )}
               />
               {children}
+              <FormFeedback />
             </main>
             <Toaster />
           </div>

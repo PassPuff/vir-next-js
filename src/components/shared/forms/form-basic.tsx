@@ -1,3 +1,4 @@
+"use client";
 import {
   Form,
   FormControl,
@@ -12,20 +13,20 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  MultiSelector,
-  MultiSelectorContent,
-  MultiSelectorInput,
-  MultiSelectorItem,
-  MultiSelectorList,
-  MultiSelectorTrigger,
-} from "@/components/ui/multi-select";
+// import {
+//   MultiSelector,
+//   MultiSelectorContent,
+//   MultiSelectorInput,
+//   MultiSelectorItem,
+//   MultiSelectorList,
+//   MultiSelectorTrigger,
+// } from "@/components/ui/multi-select";
 import PhoneInput from "react-phone-input-2";
 import "@/components/react-phone-input-2/style.css";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
-export function FormBasic() {
+export function FormBasic({ className }: { className?: string }) {
   // Define the schema using Zod
   const formSchema = z.object({
     name: z
@@ -33,9 +34,9 @@ export function FormBasic() {
       .min(2, { message: "Username must be at least 2 characters." }),
     email: z.string().email({ message: "Invalid email address" }),
     phone: z.string().min(10, { message: "Phone number is required" }),
-    contacts: z.array(z.string()).min(1, {
-      message: "Please select at least one contact method.",
-    }),
+    // contacts: z.array(z.string()).min(1, {
+    //   message: "Please select at least one contact method.",
+    // }),
   });
 
   const savedFormData =
@@ -74,7 +75,7 @@ export function FormBasic() {
             name: values.name,
             email: values.email,
             phone: values.phone,
-            contacts: values.contacts.join(", "),
+            // contacts: values.contacts.join(", "),
           },
         }),
       });
@@ -94,7 +95,7 @@ export function FormBasic() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
+        className={cn("flex flex-col gap-4", className)}
       >
         <FormField
           control={form.control}
@@ -111,7 +112,6 @@ export function FormBasic() {
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="email"
@@ -140,7 +140,7 @@ export function FormBasic() {
                   country="nl"
                   inputProps={{
                     required: true,
-                    autoFocus: true,
+                    // autoFocus: true,
                   }}
                   preferredCountries={[
                     "nl",
@@ -165,7 +165,7 @@ export function FormBasic() {
             </FormItem>
           )}
         />
-
+        {/*
         <FormField
           control={form.control}
           name="contacts"
@@ -205,7 +205,7 @@ export function FormBasic() {
             </FormItem>
           )}
         />
-
+        */}
         <Button type="submit" disabled={!isDirty || !isValid}>
           Submit
         </Button>

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import Container from "@/components/shared/Container";
 import { getProductsByCategory } from "@/lib/api/get-data";
 import { Suspense } from "react";
+import { SkeletonProductsList } from "@/components/shared/skeletons/skeleton-products-list";
 
 type Props = {
   params: Promise<{ category: string; locale: string }>;
@@ -28,8 +29,8 @@ export default async function CategoryPage({ params }: Props) {
           <p>{products[0]?.category?.description}</p>
         </header>
 
-        <ul className="grid grid-cols-3 gap-10">
-          <Suspense fallback={"Loading..."}>
+        <ul className="grid grid-cols-3 gap-10 pb-10">
+          <Suspense fallback={<SkeletonProductsList />}>
             {products.map((product) => (
               <li key={product.id}>
                 <Link

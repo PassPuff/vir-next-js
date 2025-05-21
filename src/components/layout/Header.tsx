@@ -15,6 +15,7 @@ import HeaderMobileMenu from "@/components/shared/nav/header-mobile-menu";
 import { CategoryProps } from "@/types";
 import HeaderWrapper from "@/components/shared/nav/header-wrapper";
 import { HeaderSearch } from "@/components/shared/nav/header-search";
+import { LanguageSwitcher } from "@/components/ui/switcher-language";
 
 // import { useMediaQuery } from "@/hooks/use-media-query";
 // import { useScrollDirection } from "@/hooks/use-scroll-direction";
@@ -53,7 +54,7 @@ export default async function Header({ categories }: HeaderProps) {
         <Container className="flex items-center justify-between gap-10">
           <div className="flex items-center gap-4">
             {/* Язык */}
-            <div>🇬🇧</div>
+            <LanguageSwitcher />
             {/* Навигация */}
             <NavigationMenu className="hidden md:flex gap-6">
               <NavigationMenuList>
