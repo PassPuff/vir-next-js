@@ -13,52 +13,55 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import {
-//   MultiSelector,
-//   MultiSelectorContent,
-//   MultiSelectorInput,
-//   MultiSelectorItem,
-//   MultiSelectorList,
-//   MultiSelectorTrigger,
-// } from "@/components/ui/multi-select";
+import {
+  MultiSelector,
+  MultiSelectorContent,
+  MultiSelectorInput,
+  MultiSelectorItem,
+  MultiSelectorList,
+  MultiSelectorTrigger,
+} from "@/components/ui/multi-select";
 import PhoneInput from "react-phone-input-2";
 import "@/components/react-phone-input-2/style.css";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
+// Define the schema using Zod
+const formSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters." }),
+  email: z.string().email({ message: "Invalid email address" }),
+  phone: z.string().min(10, { message: "Phone number is required" }),
+  contacts: z.array(z.string()).min(1, {
+    message: "Please select at least one contact method.",
+  }),
+});
+
+const defaultFormValues = {
+  name: "",
+  email: "",
+  phone: "",
+  contacts: ["Phone"],
+};
+
 export function FormBasic({ className }: { className?: string }) {
-  // Define the schema using Zod
-  const formSchema = z.object({
-    name: z
-      .string()
-      .min(2, { message: "Username must be at least 2 characters." }),
-    email: z.string().email({ message: "Invalid email address" }),
-    phone: z.string().min(10, { message: "Phone number is required" }),
-    // contacts: z.array(z.string()).min(1, {
-    //   message: "Please select at least one contact method.",
-    // }),
-  });
-
-  const savedFormData =
-    typeof window !== "undefined" ? sessionStorage.getItem("form-basic") : null;
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: savedFormData
-      ? JSON.parse(savedFormData)
-      : {
-          name: "",
-          email: "",
-          phone: "",
-          contacts: ["phone"],
-        },
+    defaultValues: defaultFormValues,
   });
   const { isDirty, isValid } = form.formState;
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("form-basic");
+      if (saved) form.reset(JSON.parse(saved));
+    }
+
     const subscription = form.watch((value) => {
       sessionStorage.setItem("form-basic", JSON.stringify(value));
     });
+
     return () => subscription.unsubscribe();
   }, [form]);
 
@@ -75,7 +78,7 @@ export function FormBasic({ className }: { className?: string }) {
             name: values.name,
             email: values.email,
             phone: values.phone,
-            // contacts: values.contacts.join(", "),
+            contacts: values.contacts.join(", "),
           },
         }),
       });
@@ -159,13 +162,12 @@ export function FormBasic({ className }: { className?: string }) {
                     "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
                     "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
                   )}
-                />
+                ></PhoneInput>
               </FormControl>
               <FormMessage className="text-sm font-normal text-red-600" />
             </FormItem>
           )}
         />
-        {/*
         <FormField
           control={form.control}
           name="contacts"
@@ -205,7 +207,6 @@ export function FormBasic({ className }: { className?: string }) {
             </FormItem>
           )}
         />
-        */}
         <Button type="submit" disabled={!isDirty || !isValid}>
           Submit
         </Button>
